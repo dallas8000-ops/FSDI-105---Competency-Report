@@ -1,0 +1,231 @@
+/* ------------------------------------------- */
+/* 1. GLOBAL STYLES & WRAPPER                  */
+/* ------------------------------------------- */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    /* Light Background */
+    background-color: #F7FFF7; 
+    min-height: 100vh; 
+    display: flex;
+    justify-content: center;
+    color: #003349; /* Dark Navy for general text */
+}
+
+.main-wrapper {
+    width: 100%;
+    max-width: 1000px; 
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); 
+}
+
+/* ------------------------------------------- */
+/* 2. HEADER & ICON STYLES                     */
+/* ------------------------------------------- */
+
+.header-banner {
+    background-color: #1A535C; /* Dark Blue/Navy Header */
+    color: white;
+    text-align: center;
+    padding: 20px 0 60px 0; 
+    position: relative; 
+    min-height: 150px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.header-banner h1 {
+    font-weight: bold;
+}
+
+/* Doberman Icon Positioning (Keep background white for contrast) */
+.doberman-icon-container {
+    width: 80px; 
+    height: 80px;
+    border-radius: 50%;
+    background-color: white; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: -40px; 
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    z-index: 10; 
+}
+
+.doberman-icon {
+    width: 90%; 
+    height: 90%;
+    object-fit: cover; 
+    border-radius: 50%; 
+}
+
+/* ------------------------------------------- */
+/* 3. DASHBOARD (INDEX.HTML) STYLES            */
+/* ------------------------------------------- */
+
+.stats-section {
+    position: relative;
+    padding-top: 80px !important; 
+    background-color: #F7FFF7; /* Light Background */
+    overflow: hidden; 
+}
+
+/* Blurred Background Image (boss_bg.jpg) for Dashboard */
+.stats-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('boss_bg.jpg'); 
+    background-size: cover;
+    background-position: center;
+    filter: blur(8px); 
+    -webkit-filter: blur(8px); 
+    z-index: 0;
+}
+
+/* Subtle Overlay for readability */
+.stats-section::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.3); /* Lighter overlay for blue theme */
+    z-index: 1;
+}
+
+/* Stat Boxes (The three cards) */
+.stat-box {
+    background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    height: 100%; 
+    z-index: 2; 
+    position: relative;
+    border: none;
+}
+
+.stat-heading {
+    color: #1A535C; /* Dark Blue Heading */
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #B0BEC5; /* Light Grey Border */
+    padding-bottom: 5px;
+}
+
+.stat-number {
+    color: #FFC300; /* Bronze/Gold for Numbers */
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+/* ------------------------------------------- */
+/* 4. SERVICES PAGE (SERVICES.HTML) STYLES     */
+/* ------------------------------------------- */
+
+/* Unique Background for Services Page */
+.services-page-bg {
+    /* Uses the unique background image for the services page */
+    background-image: url('shepherd_bg .jpg'); 
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center center;
+}
+
+/* Main Content Box on the Services Page */
+.services-content-section {
+    position: relative; 
+    z-index: 5;
+    padding-top: 80px !important;
+}
+
+.service-list-box {
+    background-color: rgba(255, 255, 255, 0.95); /* Nearly opaque white box */
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.services-content-section h2 {
+    color: #1A535C; /* Dark Blue Heading */
+    font-weight: bold;
+    border-bottom: 2px solid #4ECDC4; /* Teal Blue Underline */
+    padding-bottom: 10px;
+}
+
+.service-group {
+    background-color: #F7FFF7; /* Light Background for service group boxes */
+    border-radius: 8px;
+    border: 1px solid #1A535C; /* Dark Blue Border */
+}
+
+.service-group .group-title {
+    color: #1A535C; /* Dark Blue for titles */
+    font-weight: bold;
+    font-size: 1.3rem;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    border-bottom: 1px dashed #B0BEC5; /* Light Grey Dashed Border */
+}
+
+.service-list li {
+    padding: 5px 0;
+    color: #003349;
+}
+
+/* Back to Dashboard Button */
+.back-to-dash-btn {
+    background-color: #4ECDC4; /* Teal Blue Button */
+    border-color: #4ECDC4;
+    color: white;
+    font-weight: bold;
+    padding: 10px 20px;
+    transition: background-color 0.3s;
+}
+
+.back-to-dash-btn:hover {
+    background-color: #1A535C; /* Dark Blue on Hover */
+    border-color: #1A535C;
+    color: white;
+}
+
+/* ------------------------------------------- */
+/* 5. FOOTER STYLES                            */
+/* ------------------------------------------- */
+
+.main-footer {
+    background-color: #4ECDC4; /* Teal Blue Footer */
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    padding: 15px 0;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .header-banner {
+        padding: 15px 0 50px 0;
+    }
+    .doberman-icon-container {
+        width: 70px; 
+        height: 70px;
+        bottom: -35px;
+    }
+    .stats-section, .services-content-section {
+        padding-top: 60px !important;
+    }
+    .stat-number {
+        font-size: 2rem;
+    }
+}

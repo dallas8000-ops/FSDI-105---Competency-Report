@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pimp your Pet 💅</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" 
+          rel="stylesheet" 
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
+          crossorigin="anonymous">
+    <style>
+        /* Global Styles and Background */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f0e6; /* Light cream background */
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="15" fill="%23e0c0a0" opacity="0.1"/></svg>'); /* Subtle paw print pattern (simulated) */
+            color: #333;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        /* Header and Main Layout */
+        header {
+            background-color: #5d4037; /* Dark brown header */
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            gap: 20px;
+        }
+
+        /* Information Panels */
+        .info-panel {
+            flex: 1;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #fff9f0;
+            text-align: center;
+        }
+
+        .info-panel h2 {
+            color: #8b4513; /* Saddle brown heading */
+            border-bottom: 2px solid #8b4513;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        /* Specific styles for Pet Count */
+        #petCount { 
+            font-size: 3em;
+            color: #c70039; /* Prominent red color */
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        /* Styles for Pet Names List */
+        #petList { 
+            list-style-type: none;
+            padding: 0;
+            max-height: 300px;
+            overflow-y: auto;
+            text-align: left;
+        }
+
+        #petList li {
+            background-color: #ffe4b5; /* Moccasin background for list items */
+            margin-bottom: 8px;
+            padding: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #5d4037;
+        }
+        
+        /* Extra Challenge Display */
+        #averageAge { 
+            font-size: 1.5em;
+            color: #007bff; /* Blue for the extra challenge result */
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                margin: 15px;
+            }
+        }
+    </style>
+    </head>
+<body>
+
+    <header>
+        <h1>Pimp your Pet 💅</h1>
+        <p>Your pet's favorite spa day!</p>
+    </header>
+
+    <div class="container">
+        
+        <section class="info-panel">
+            <h2>Registered Pets Count</h2>
+            <div id="petCount">0</div>
+        </section>
+
+        <section class="info-panel">
+            <h2>Our Current Clients</h2>
+            <ul id="petList">
+                <li>Client names loading...</li>
+            </ul>
+        </section>
+        
+        <section class="info-panel">
+            <h2>Salon Metrics</h2>
+            <p>Average Client Age:</p>
+            <div id="averageAge">0 years</div>
+        </section>
+    </div>
+
+    <script src="script.js"></script> 
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
+            crossorigin="anonymous"></script>
+    </body>
+</html>

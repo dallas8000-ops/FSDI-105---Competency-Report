@@ -36,137 +36,126 @@ body {
 
 .header-banner h1 {
     font-weight: bold;
+    margin-bottom: 0;
 }
 
-/* Doberman Icon Positioning (Keep background white for contrast) */
+.tagline {
+    font-style: italic;
+    font-size: 1.1rem;
+    margin-top: 5px;
+    opacity: 0.8;
+}
+
 .doberman-icon-container {
-    width: 80px; 
-    height: 80px;
-    border-radius: 50%;
-    background-color: white; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
     position: absolute;
-    bottom: -40px; 
+    bottom: -30px; /* Positions the icon below the header */
     left: 50%;
     transform: translateX(-50%);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    overflow: hidden;
-    z-index: 10; 
+    width: 70px;
+    height: 70px;
+    background-color: #FFC300; /* Yellow circle background */
+    border-radius: 50%;
+    padding: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    z-index: 10;
 }
 
 .doberman-icon {
-    width: 90%; 
-    height: 90%;
-    object-fit: cover; 
-    border-radius: 50%; 
-}
-
-/* ------------------------------------------- */
-/* 3. DASHBOARD (INDEX.HTML) STYLES            */
-/* ------------------------------------------- */
-
-.stats-section {
-    position: relative;
-    padding-top: 80px !important; 
-    background-color: #F7FFF7; /* Light Background */
-    overflow: hidden; 
-}
-
-/* Blurred Background Image (boss_bg.jpg) for Dashboard */
-.stats-section::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+
+/* ------------------------------------------- */
+/* 3. DASHBOARD (index.html) STYLES            */
+/* ------------------------------------------- */
+
+.dashboard-body {
+    /* Background for index.html */
     background-image: url('boss_bg.jpg'); 
     background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     background-position: center;
-    filter: blur(8px); 
-    -webkit-filter: blur(8px); 
-    z-index: 0;
+    color: #fff;
 }
 
-/* Subtle Overlay for readability */
-.stats-section::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.3); /* Lighter overlay for blue theme */
-    z-index: 1;
+.stats-section {
+    min-height: calc(100vh - 200px); /* Adjust height for content */
+    padding-top: 80px !important; /* Push content down past icon */
 }
 
-/* Stat Boxes (The three cards) */
 .stat-box {
-    background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
-    border-radius: 5px;
-    padding: 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    height: 100%; 
-    z-index: 2; 
-    position: relative;
-    border: none;
+    background-color: rgba(255, 255, 255, 0.9); /* White with slight transparency */
+    color: #003349;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    min-height: 200px;
 }
 
 .stat-heading {
-    color: #1A535C; /* Dark Blue Heading */
+    color: #1A535C; /* Dark Blue Title */
     font-weight: bold;
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #B0BEC5; /* Light Grey Border */
-    padding-bottom: 5px;
+    border-bottom: 2px solid #4ECDC4; /* Teal Blue Separator */
+    padding-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .stat-number {
-    color: #FFC300; /* Bronze/Gold for Numbers */
     font-size: 2.5rem;
-    font-weight: bold;
-    margin: 5px 0;
+    font-weight: 900;
+    color: #FF6B6B; /* Red Accent */
 }
 
+.client-list {
+    max-height: 100px;
+    overflow-y: auto;
+}
+
+.client-list li {
+    padding: 3px 0;
+    font-size: 1.1rem;
+}
+
+
 /* ------------------------------------------- */
-/* 4. SERVICES PAGE (SERVICES.HTML) STYLES     */
+/* 4. SERVICES (services.html) STYLES          */
 /* ------------------------------------------- */
 
-/* Unique Background for Services Page */
 .services-page-bg {
-    /* Uses the unique background image for the services page */
-    background-image: url('shepherd_bg .jpg'); 
+    /* Background for services.html */
+    /* CORRECTION: background-image path changed to 'shepherd.jpg' */
+    background-image: url('shepherd.jpg'); 
     background-size: cover;
+    background-repeat: no-repeat;
     background-attachment: fixed;
-    background-position: center center;
+    background-position: center;
+    color: #fff;
 }
 
-/* Main Content Box on the Services Page */
 .services-content-section {
-    position: relative; 
-    z-index: 5;
+    min-height: calc(100vh - 200px);
     padding-top: 80px !important;
 }
 
 .service-list-box {
-    background-color: rgba(255, 255, 255, 0.95); /* Nearly opaque white box */
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    background-color: rgba(255, 255, 255, 0.95); /* Nearly opaque white background */
+    color: #003349;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
-.services-content-section h2 {
-    color: #1A535C; /* Dark Blue Heading */
-    font-weight: bold;
-    border-bottom: 2px solid #4ECDC4; /* Teal Blue Underline */
-    padding-bottom: 10px;
+.service-list-box h2 {
+    color: #FF6B6B; /* Red Accent Title */
+    font-weight: 900;
 }
 
 .service-group {
-    background-color: #F7FFF7; /* Light Background for service group boxes */
+    background-color: #F7FFF7; /* Very light background for groups */
     border-radius: 8px;
-    border: 1px solid #1A535C; /* Dark Blue Border */
+    border: 1px solid #B0BEC5; /* Light Grey Border */
 }
 
 .service-group .group-title {
@@ -207,25 +196,26 @@ body {
     background-color: #4ECDC4; /* Teal Blue Footer */
     color: white;
     text-align: center;
-    font-weight: bold;
-    padding: 15px 0;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    /* Ensures footer is at the bottom of the wrapper */
+    margin-top: auto; 
 }
 
-/* Responsive adjustments for smaller screens */
+
+/* ------------------------------------------- */
+/* 6. RESPONSIVENESS                           */
+/* ------------------------------------------- */
+
 @media (max-width: 768px) {
     .header-banner {
         padding: 15px 0 50px 0;
     }
     .doberman-icon-container {
-        width: 70px; 
-        height: 70px;
-        bottom: -35px;
+        width: 60px;
+        height: 60px;
+        bottom: -25px;
     }
-    .stats-section, .services-content-section {
-        padding-top: 60px !important;
-    }
-    .stat-number {
-        font-size: 2rem;
+    .stat-box {
+        min-height: auto;
     }
 }

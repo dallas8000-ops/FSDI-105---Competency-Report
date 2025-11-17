@@ -6,12 +6,11 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    /* Light Background */
     background-color: #F7FFF7; 
     min-height: 100vh; 
     display: flex;
     justify-content: center;
-    color: #003349; /* Dark Navy for general text */
+    color: #003349;
 }
 
 .main-wrapper {
@@ -20,12 +19,10 @@ body {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); 
 }
 
-/* ------------------------------------------- */
 /* 2. HEADER & ICON STYLES                     */
-/* ------------------------------------------- */
 
 .header-banner {
-    background-color: #1A535C; /* Dark Blue/Navy Header */
+    background-color: #1A535C;
     color: white;
     text-align: center;
     padding: 20px 0 60px 0; 
@@ -48,12 +45,12 @@ body {
 
 .doberman-icon-container {
     position: absolute;
-    bottom: -30px; /* Positions the icon below the header */
+    bottom: -30px;
     left: 50%;
     transform: translateX(-50%);
     width: 70px;
     height: 70px;
-    background-color: #FFC300; /* Yellow circle background */
+    background-color: #FFC300;
     border-radius: 50%;
     padding: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
@@ -68,12 +65,9 @@ body {
 }
 
 
-/* ------------------------------------------- */
 /* 3. DASHBOARD (index.html) STYLES            */
-/* ------------------------------------------- */
 
 .dashboard-body {
-    /* Background for index.html */
     background-image: url('boss_bg.jpg'); 
     background-size: cover;
     background-repeat: no-repeat;
@@ -83,12 +77,12 @@ body {
 }
 
 .stats-section {
-    min-height: calc(100vh - 200px); /* Adjust height for content */
-    padding-top: 80px !important; /* Push content down past icon */
+    min-height: calc(100vh - 200px);
+    padding-top: 80px !important;
 }
 
 .stat-box {
-    background-color: rgba(255, 255, 255, 0.9); /* White with slight transparency */
+    background-color: rgba(255, 255, 255, 0.9);
     color: #003349;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -96,9 +90,9 @@ body {
 }
 
 .stat-heading {
-    color: #1A535C; /* Dark Blue Title */
+    color: #1A535C;
     font-weight: bold;
-    border-bottom: 2px solid #4ECDC4; /* Teal Blue Separator */
+    border-bottom: 2px solid #4ECDC4;
     padding-bottom: 10px;
     margin-bottom: 15px;
 }
@@ -106,7 +100,7 @@ body {
 .stat-number {
     font-size: 2.5rem;
     font-weight: 900;
-    color: #FF6B6B; /* Red Accent */
+    color: #FF6B6B;
 }
 
 .client-list {
@@ -119,14 +113,27 @@ body {
     font-size: 1.1rem;
 }
 
+/* Added back-to-dash-btn styles for use on index.html */
+.back-to-dash-btn {
+    background-color: #4ECDC4;
+    border-color: #4ECDC4;
+    color: white;
+    font-weight: bold;
+    padding: 10px 20px;
+    transition: background-color 0.3s;
+}
 
-/* ------------------------------------------- */
+.back-to-dash-btn:hover {
+    background-color: #1A535C;
+    border-color: #1A535C;
+    color: white;
+}
+
+
 /* 4. SERVICES (services.html) STYLES          */
-/* ------------------------------------------- */
+
 
 .services-page-bg {
-    /* Background for services.html */
-    /* CORRECTION: background-image path changed to 'shepherd.jpg' */
     background-image: url('shepherd.jpg'); 
     background-size: cover;
     background-repeat: no-repeat;
@@ -140,31 +147,45 @@ body {
     padding-top: 80px !important;
 }
 
+/* --- NEW: FLEXBOX CONTAINER  --- */
+.service-cards {
+    display: flex;
+    justify-content: space-between; 
+    gap: 20px; 
+    flex-wrap: wrap; 
+    padding: 0 15px; 
+}
+/* ----------------------------------------------------- */
+
 .service-list-box {
-    background-color: rgba(255, 255, 255, 0.95); /* Nearly opaque white background */
+    background-color: rgba(255, 255, 255, 0.95);
     color: #003349;
     border-radius: 15px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    
+    flex: 1 1 30%; 
+    min-width: 280px;
+    margin-bottom: 20px;
 }
 
 .service-list-box h2 {
-    color: #FF6B6B; /* Red Accent Title */
+    color: #FF6B6B;
     font-weight: 900;
 }
 
 .service-group {
-    background-color: #F7FFF7; /* Very light background for groups */
+    background-color: #F7FFF7;
     border-radius: 8px;
-    border: 1px solid #B0BEC5; /* Light Grey Border */
+    border: 1px solid #B0BEC5;
 }
 
 .service-group .group-title {
-    color: #1A535C; /* Dark Blue for titles */
+    color: #1A535C;
     font-weight: bold;
     font-size: 1.3rem;
     padding-bottom: 5px;
     margin-bottom: 10px;
-    border-bottom: 1px dashed #B0BEC5; /* Light Grey Dashed Border */
+    border-bottom: 1px dashed #B0BEC5;
 }
 
 .service-list li {
@@ -172,39 +193,19 @@ body {
     color: #003349;
 }
 
-/* Back to Dashboard Button */
-.back-to-dash-btn {
-    background-color: #4ECDC4; /* Teal Blue Button */
-    border-color: #4ECDC4;
-    color: white;
-    font-weight: bold;
-    padding: 10px 20px;
-    transition: background-color 0.3s;
-}
 
-.back-to-dash-btn:hover {
-    background-color: #1A535C; /* Dark Blue on Hover */
-    border-color: #1A535C;
-    color: white;
-}
-
-/* ------------------------------------------- */
 /* 5. FOOTER STYLES                            */
-/* ------------------------------------------- */
 
 .main-footer {
-    background-color: #4ECDC4; /* Teal Blue Footer */
+    background-color: #4ECDC4;
     color: white;
     text-align: center;
     width: 100%;
-    /* Ensures footer is at the bottom of the wrapper */
     margin-top: auto; 
 }
 
 
-/* ------------------------------------------- */
 /* 6. RESPONSIVENESS                           */
-/* ------------------------------------------- */
 
 @media (max-width: 768px) {
     .header-banner {
@@ -217,5 +218,9 @@ body {
     }
     .stat-box {
         min-height: auto;
+    }
+    /* ADDED RESPONSIVENESS FOR SERVICE CARDS */
+    .service-list-box {
+        flex: 1 1 100%; 
     }
 }

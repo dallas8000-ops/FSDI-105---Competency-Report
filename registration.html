@@ -3,146 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pimp your Pet 💅</title>
+    <title>Pimp your Pet Services Registration</title>
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" 
           rel="stylesheet" 
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
           crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="style.css"> 
+
     <style>
-        /* Global Styles and Background */
+        
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f0e6; /* Light cream background */
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="15" fill="%23e0c0a0" opacity="0.1"/></svg>'); /* Subtle paw print pattern (simulated) */
-            color: #333;
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
+            /* Keep background image from existing style */
+            background-image: url('boss_bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            
             flex-direction: column;
             align-items: center;
         }
 
+        /* REVERTED: Large Header Banner */
         header {
             width: 100%;
-            background-color: #5d4037; /* Dark Brown Header */
+            background-color: #265452; 
             color: white;
             text-align: center;
             padding: 20px 0;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-            margin-bottom: 30px;
         }
 
         header h1 {
-            margin: 0;
-            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 0;
+        }
+        
+        .page-content-container {
+            padding: 30px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            max-width: 900px;
+            width: 95%;
         }
 
-        .container {
-            display: flex;
-            justify-content: space-around;
-            width: 90%;
-            max-width: 1200px;
-            margin: 20px auto;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .info-panel {
-            background-color: white;
+        /* FORM Container (for white background and shadow) */
+        .registration-form-container {
+            background-color: rgba(255, 255, 255, 1);
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 30%;
-            min-width: 280px;
-            text-align: center;
-            transition: transform 0.3s;
+            margin-bottom: 40px;
         }
 
-        .info-panel:hover {
-            transform: translateY(-5px);
+        /* TABLE Container (for white background and shadow) */
+        .table-container {
+            background-color: rgba(255, 255, 255, 1);
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
         }
 
-        .info-panel h2 {
-            color: #8d6e63; /* Medium Brown Title */
-            margin-top: 0;
-            font-size: 1.2em;
-            border-bottom: 2px solid #8d6e63;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-        }
-
-        #petCount {
-            font-size: 3em;
-            color: #ff7043; /* Orange Accent */
-            font-weight: bold;
-        }
-
-        #petList {
-            list-style: none;
-            padding: 0;
+        .section-heading {
+            color: black; 
+            font-weight: 700;
+            margin-bottom: 25px;
             text-align: left;
-            max-height: 200px;
-            overflow-y: auto;
+            font-size: 1.75rem;
+        }
+        
+        .btn-dark {
+            background-color: black;
+            border-color: black;
         }
 
-        #petList li {
-            padding: 5px 0;
-            border-bottom: 1px dashed #e0e0e0;
-        }
-
-        /* Extra Challenge Display */
-        #averageAge { 
-            font-size: 1.5em;
-            color: #007bff; /* Blue for the extra challenge result */
+        /* Styling for the table headers to be visible against white */
+        #petsTable thead th {
+            color: black;
             font-weight: bold;
-            margin-top: 10px;
+            border-bottom: 2px solid #dee2e6;
         }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-                margin: 15px;
-            }
-            .info-panel {
-                width: 100%;
-            }
-        }
+        
     </style>
-    </head>
+</head>
 <body>
-
+    
     <header>
-        <h1>Pimp your Pet 💅</h1>
-        <p>Your pet's favorite spa day!</p>
+        <h1>Pimp your Pet Services Registration</h1>
+        <p>Register new clients and view the current roster.</p>
     </header>
-
-    <div class="container">
+    <div class="main-wrapper">
         
-        <section class="info-panel">
-            <h2>Registered Pets Count</h2>
-            <div id="petCount">5</div>
-        </section>
+        <div class="d-flex justify-content-center">
+            
+            <div class="page-content-container">
+                
+                <div class="registration-form-container">
+                    <section>
+                        <h2 class="section-heading">Register</h2>
+                        
+                        <form id="petRegistrationForm">
+                            
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="petName" class="form-label">Name:</label>
+                                    <input type="text" class="form-control" id="petName" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="petAge" class="form-label">Age:</label>
+                                    <input type="number" class="form-control" id="petAge" min="0" required>
+                                </div>
+                            </div>
 
-        <section class="info-panel">
-            <h2>Our Current Clients</h2>
-            <ul id="petList">
-                <li>Kobie</li>
-                <li>Cooper</li>
-                <li>Barkley</li>
-                <li>Shep</li>
-                <li>Boss</li>
-            </ul>
-        </section>
-        
-        <section class="info-panel">
-            <h2>Salon Metrics</h2>
-            <p>Average Client Age:</p>
-            <div id="averageAge">5.0 years</div>
-        </section>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label for="petGender" class="form-label">Gender:</label>
+                                    <select class="form-select" id="petGender" required>
+                                        <option value="" disabled selected>Select Gender</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="petBreed" class="form-label">Breed:</label>
+                                    <input type="text" class="form-control" id="petBreed" required>
+                                </div>
+                            </div>
+                            
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <label for="petService" class="form-label">Service:</label>
+                                    <select class="form-select" id="petService" required>
+                                        <option value="" disabled selected>Select a Service</option>
+                                        <option value="Full Grooming">Full Grooming</option>
+                                        <option value="Nail Trim & Filing">Nail Trim & Filing</option>
+                                        <option value="Dental Cleaning">Dental Cleaning</option>
+                                        <option value="De-shedding Treatment">De-shedding Treatment</option>
+                                        <option value="Deep Conditioning Wash">Deep Conditioning Wash</option>
+                                        <option value="Blueberry Facial">Blueberry Facial</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <input type="hidden" id="petType" value="Dog"> 
+                            
+                            <div class="pt-3">
+                                <button type="submit" class="btn btn-dark">Register</button>
+                            </div>
+
+                        </form>
+                    </section>
+                </div>
+                
+                <div class="table-container">
+                    <section>
+                        <h2 class="section-heading">Registered pets</h2>
+                        
+                        <div class="table-responsive">
+                            <table class="table **table-striped**" id="petsTable">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Age</th>
+                                        <th>Gender</th>
+                                        <th>Breed</th>
+                                        <th>Service</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    </tbody>
+                            </table>
+                        </div>
+                    </section>
+                    
+                </div>
+                
+            </div>
+            
+        </div>
     </div>
 
     <script src="script.js"></script> 

@@ -1,129 +1,145 @@
-// --- Global Data Array ---
-
-/**
- * The main array to store pet objects.
- * INITIALIZED with 5 pets, including the two new ones (Shep and Boss).
- */
-let pets = [
-    {
-        Name: "Kobie",
-        Age: 3,
-        Gender: "Male",
-        Service: "Full Grooming",
-        Breed: "Cane Corso"
-    },
-    {
-        Name: "Cooper",
-        Age: 7,
-        Gender: "Female",
-        Service: "Nail Trim",
-        Breed: "German Shepherd"
-    },
-    {
-        Name: "Barkley",
-        Age: 5,
-        Gender: "Male",
-        Service: "Dental Cleaning",
-        Breed: "Doberman"
-    },
-    // --- NEW PET 1 (Shepherd Image) ---
-    {
-        Name: "Shep",
-        Age: 4,
-        Gender: "Male",
-        Service: "De-shedding Treatment",
-        Breed: "Belgian Malinois"
-    },
-    // --- NEW PET 2 (Boss Image) ---
-    {
-        Name: "Boss",
-        Age: 6,
-        Gender: "Male",
-        Service: "Deep Conditioning Wash",
-        Breed: "Thai Ridgeback"
-    }
-];
-
-// --- Functionalities ---
-
-/**
- * Function to calculate and display the total number of registered pets.
- * Targets the element with id="petCount".
- */
-function displayRegisteredPetsCount() {
-    // Get the length of the pets array
-    let count = pets.length; 
-
-    // Use getElementById to find the span and update its text content
-    let petCountElement = document.getElementById("petCount");
-    if (petCountElement) {
-        petCountElement.textContent = count;
+class Pet {
+    constructor(name, age, gender, breed, service, type) {
+        this.Name = name;
+        this.Age = parseInt(age);
+        this.Gender = gender;
+        this.Breed = breed;
+        this.Service = service;
+        this.Type = type;
     }
 }
 
-/**
- * Function to iterate through the pets array and display their names.
- * Targets the <ul> element with id="petList".
- */
-function displayPetNames() {
-    // Get the <ul> element where the names will be listed
-    let petListElement = document.getElementById("petList");
+const salon = {
+    clients: [
+        new Pet("Kobie", 3, "Male", "Cane Corso", "Full Grooming", "Dog"),
+        new Pet("Cooper", 7, "Female", "German Shepherd", "Nail Trim & Filing", "Dog"),
+        new Pet("Barkley", 5, "Male", "Doberman", "Dental Cleaning", "Dog"),
+        new Pet("Shep", 4, "Male", "Belgian Malinois", "De-shedding Treatment", "Dog"),
+        new Pet("Boss", 6, "Male", "Thai Ridgeback", "Deep Conditioning Wash", "Dog")
+    ],
 
-    // Exit if the element is not found (e.g., if on a different page)
-    if (!petListElement) return;
-
-    // Clear any existing content before updating
-    petListElement.innerHTML = '';
-
-    // Iterate through the pets array using a for loop
-    for (let i = 0; i < pets.length; i++) {
-        let listItem = document.createElement("li");
-        // Access the pet's name property
-        listItem.textContent = pets[i].Name;
-        petListElement.appendChild(listItem);
-    }
-}
-
-// --- Extra Challenge: Average Age ---
-
-/**
- * Function to calculate the average age of all registered pets.
- * Targets the element with id="averageAge".
- */
-function calculateAverageAge() {
-    if (pets.length === 0) {
-        // Return 0 if there are no pets to avoid division by zero
-        let averageAgeElement = document.getElementById("averageAge");
-        if (averageAgeElement) {
-            averageAgeElement.textContent = "0 years";
+    calculateAverageAge: function() {
+        if (this.clients.length === 0) {
+            return 0;
         }
-        return 0;
+
+        const totalAge = this.clients.reduce((sum, client) => sum + client.Age, 0);
+        return (totalAge / this.clients.length).toFixed(1);
+    },
+
+    displaySalonData: function() {
+        // --- Display Pet Count (for index.html) ---
+        const petCountElement = document.getElementById('petCount');
+        if (petCountElement) {
+            petCountElement.textContent = this.clients.length;
+        }
+
+        // --- Display Pet List (for index.html) ---
+        const petListElement = document.getElementById('petList');
+        if (petListElement) {
+            petListElement.innerHTML = '';
+
+            this.clients.forEach(client => {
+                const listItem = document.createElement('li');
+                listItem.textContent = client.Name;
+                petListElement.appendChild(listItem);
+            });
+        }
+
+        // --- Display Average Age (for index.html) ---
+        const averageAgeElement = document.getElementById('averageAge');
+        if (averageAgeElement) {
+            const avgAge = this.calculateAverageAge();
+            averageAgeElement.textContent = `${avgAge} years`;
+        }
+    },
+    
+    // REQUIRED FUNCTION: displayRow() to render table rows
+    displayRow: function() {
+        const tableBody = document.querySelector('#petsTable tbody');
+        if (!tableBody) {
+            return; // Exit if the table body doesn't exist
+        }
+        
+        let html = '';
+        
+        this.clients.forEach((pet, index) => {
+            const rowNumber = index + 1;
+
+            html += `
+                <tr>
+                    <th scope="row">${rowNumber}</th>
+                    <td>${pet.Name}</td>
+                    <td>${pet.Age}</td>
+                    <td>${pet.Gender}</td>
+                    <td>${pet.Breed}</td>
+                    <td>${pet.Service}</td>
+                    <td><button class="btn btn-sm btn-danger delete-btn" data-index="${index}">Delete</button></td>
+                </tr>
+            `;
+        });
+
+        tableBody.innerHTML = html;
+        
+        // Attaching Delete event listeners (optional for now, but good practice)
+        document.querySelectorAll('.delete-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const petIndex = parseInt(e.target.getAttribute('data-index'));
+                console.log(`Attempting to delete pet at index: ${petIndex}`);
+                // Deletion function would be called here.
+            });
+        });
+    },
+    
+    registerNewPet: function(newPet) {
+        this.clients.push(newPet);
+        this.displaySalonData(); // Update dashboard metrics
+        this.displayRow(); // Update the table on registration.html
     }
+};
 
-    let totalAge = 0;
-    // Iterate through pets to sum the ages
-    for (let pet of pets) {
-        totalAge += pet.Age;
+function handleFormSubmission(e) {
+    e.preventDefault();
+
+    const name = document.getElementById('petName').value.trim();
+    const age = document.getElementById('petAge').value;
+    const breed = document.getElementById('petBreed').value.trim();
+    const gender = document.getElementById('petGender').value;
+    const service = document.getElementById('petService').value;
+    // Note: petType is read from a hidden field in registration.html
+    const type = document.getElementById('petType').value; 
+
+    // --- Validation ---
+    const parsedAge = parseInt(age);
+    if (isNaN(parsedAge) || parsedAge <= 0 || name === "" || breed === "" || !gender || !service) {
+        alert("Please ensure all fields are entered correctly.");
+        return; 
     }
+    // --------------------
 
-    // Calculate average and round to one decimal place
-    let average = (totalAge / pets.length).toFixed(1);
+    const newClient = new Pet(name, parsedAge, gender, breed, service, type);
 
-    // Display the result
-    let averageAgeElement = document.getElementById("averageAge");
-    if (averageAgeElement) {
-        averageAgeElement.textContent = average + " years";
-    }
+    salon.registerNewPet(newClient);
 
-    return average;
+    // Reset the form after successful submission
+    e.target.reset();
 }
 
-// --- Initialization ---
-
-// Wait for the entire HTML document to load before running the functions
 document.addEventListener("DOMContentLoaded", function() {
-    console.log("Pet Salon script loaded and initialized.");
-    displayRegisteredPetsCount();
-    displayPetNames();
-    calculateAverageAge();
+    // If on index.html, display dashboard data
+    const petCountElement = document.getElementById('petCount');
+    if (petCountElement) {
+        salon.displaySalonData();
+    }
+    
+    // If on registration.html: attach form listener AND display the table
+    const registrationForm = document.getElementById('petRegistrationForm');
+    if (registrationForm) {
+        registrationForm.addEventListener('submit', handleFormSubmission);
+    }
+    
+    const tableBody = document.querySelector('#petsTable tbody');
+    if (tableBody) {
+        salon.displayRow(); // Call the new displayRow function to populate the table
+    }
 });

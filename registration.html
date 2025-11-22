@@ -5,16 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pimp your Pet Services Registration</title>
     
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" 
           rel="stylesheet" 
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
           crossorigin="anonymous">
     
-    <!-- Font Awesome for the Delete icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     
-    <!-- Assuming style.css provides additional styling -->
     <link rel="stylesheet" href="style.css"> 
 
     <style>
@@ -104,7 +101,6 @@
         <div class="row justify-content-center">
             <div class="col-12 col-lg-10">
 
-                <!-- Header -->
                 <header class="header-banner">
                     <h1 class="display-5">Pimp your Pet</h1>
                     <p class="tagline">Client Registration</p>
@@ -112,21 +108,13 @@
 
                 <div class="content-container">
 
-                    <!-- Registration Form Section -->
                     <section class="form-section">
                         <h2 class="section-heading">Register New Pet Client</h2>
                         
-                        <!-- Validation Message Area -->
-                        <div class="alert alert-danger d-none" id="validationMessage" role="alert">
-                            <!-- Message will be inserted here by script.js -->
-                        </div>
-
                         <form id="petRegistrationForm" class="row g-3">
                             
-                            <!-- Hidden field for Pet Type (as required by original logic) -->
                             <input type="hidden" id="petType" value="Dog">
 
-                            <!-- Name and Age -->
                             <div class="mb-3 col-md-6">
                                 <label for="petName" class="form-label">Pet Name</label>
                                 <input type="text" class="form-control" id="petName" required>
@@ -137,7 +125,6 @@
                                 <input type="number" class="form-control" id="petAge" required min="1">
                             </div>
 
-                            <!-- Gender and Breed -->
                             <div class="mb-3 col-md-6">
                                 <label for="petGender" class="form-label">Gender</label>
                                 <select class="form-select" id="petGender" required>
@@ -152,7 +139,6 @@
                                 <input type="text" class="form-control" id="petBreed" required>
                             </div>
 
-                            <!-- Service -->
                             <div class="mb-3 col-md-6">
                                 <label for="petService" class="form-label">Service Required</label>
                                 <select class="form-select" id="petService" required>
@@ -165,7 +151,6 @@
                                 </select>
                             </div>
                             
-                            <!-- NEW FIELD: Payment Method Dropdown -->
                             <div class="mb-3 col-md-6">
                                 <label for="petPayment" class="form-label">Payment Method</label>
                                 <select class="form-select" id="petPayment" required>
@@ -177,7 +162,6 @@
                                 </select>
                             </div>
 
-                            <!-- Submission Button -->
                             <div class="col-12 text-center mt-4">
                                 <button type="submit" class="btn btn-lg btn-register shadow-lg">
                                     Register Pet
@@ -186,7 +170,6 @@
                         </form>
                     </section>
 
-                    <!-- Registered Pets Table Section -->
                     <div class="table-container">
                         <section>
                             <h2 class="section-heading">Registered Pets</h2>
@@ -201,20 +184,17 @@
                                             <th>Gender</th>
                                             <th>Breed</th>
                                             <th>Service</th>
-                                            <!-- NEW HEADER -->
                                             <th>Payment</th> 
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- Data rows will be injected here by script.js -->
-                                    </tbody>
+                                        </tbody>
                                 </table>
                             </div>
                         </section>
                     </div>
 
-                    <!-- Back Button -->
                     <div class="text-center mt-4">
                         <a href="index.html" class="btn btn-lg back-to-dash-btn shadow">
                             ← Back to Dashboard
@@ -226,7 +206,8 @@
         </div>
     </div>
 
-    <!-- External Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
     <script src="script.js"></script> 
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 

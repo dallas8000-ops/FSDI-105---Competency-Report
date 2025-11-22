@@ -79,10 +79,8 @@ const salon = {
                     <td>${pet.Gender}</td>
                     <td>${pet.Breed}</td>
                     <td>${pet.Service}</td>
-                    <!-- NEW COLUMN: Displays Payment Method -->
                     <td class="text-uppercase fw-bold">${pet.PaymentMethod}</td> 
                     <td class="text-center">
-                        <!-- Calls deletePet function with the current row index -->
                         <button class="btn btn-sm btn-danger shadow-sm" onclick="salon.deletePet(${i})">
                             <i class="fas fa-trash-alt me-1"></i> Delete
                         </button>
@@ -94,39 +92,72 @@ const salon = {
     }
 };
 
+/**
+ * NEW FUNCTION: Handles form submission using jQuery for validation and reset.
+ * Visual errors are displayed by adding the Bootstrap 'is-invalid' class (red border).
+ */
 function handleFormSubmission(e) {
     e.preventDefault();
 
-    const name = document.getElementById('petName').value.trim();
-    const age = document.getElementById('petAge').value.trim();
-    const breed = document.getElementById('petBreed').value.trim();
-    const gender = document.getElementById('petGender').value;
-    const service = document.getElementById('petService').value;
-    const paymentMethod = document.getElementById('petPayment').value; // READS NEW FIELD
-    const type = document.getElementById('petType').value;
+    let isValid = true;
+    const $form = $(e.target);
+    
+    // Use jQuery selector to find all required fields (excluding the hidden one)
+    const $requiredFields = $('#petName, #petAge, #petGender, #petBreed, #petService, #petPayment');
+    
+    // Clear previous invalid visual feedback using jQuery
+    $requiredFields.removeClass('is-invalid');
+    
+    // --- Validation using jQuery ---
+    $requiredFields.each(function() {
+        const $field = $(this);
+        const value = $field.val().trim();
+        
+        let fieldIsValid = true;
 
-    const validationMessageElement = document.getElementById('validationMessage');
+        if (!value) {
+            fieldIsValid = false;
+        } 
+        
+        // Specific validation for age field
+        if ($field.attr('id') === 'petAge') {
+            const parsedAge = parseInt(value);
+            if (isNaN(parsedAge) || parsedAge <= 0) {
+                fieldIsValid = false;
+            }
+        }
+        
+        // Highlight field if invalid
+        if (!fieldIsValid) {
+            $field.addClass('is-invalid'); // Adds red border
+            isValid = false;
+        }
+    });
 
-    // --- Validation ---
-    const parsedAge = parseInt(age);
-    // UPDATED VALIDATION: Checks for the new paymentMethod field
-    if (isNaN(parsedAge) || parsedAge <= 0 || name === "" || breed === "" || !gender || !service || !paymentMethod) {
-        // Use a custom message box instead of alert()
-        validationMessageElement.textContent = "Please ensure all fields, including Payment Method, are entered correctly and age is a valid number.";
-        validationMessageElement.classList.remove('d-none');
-        return;
+    // Stop submission if validation failed
+    if (!isValid) {
+        return; 
     }
-    // Clear the message on success
-    validationMessageElement.classList.add('d-none');
-    // --------------------
 
-    // UPDATED INSTANTIATION: Passes the new attribute to the Pet constructor
-    const newClient = new Pet(name, parsedAge, gender, breed, service, type, paymentMethod);
+    // --- Successful Registration ---
+    
+    // Read values using jQuery's .val()
+    const name = $('#petName').val().trim();
+    const age = $('#petAge').val().trim();
+    const breed = $('#petBreed').val().trim();
+    const gender = $('#petGender').val();
+    const service = $('#petService').val();
+    const paymentMethod = $('#petPayment').val(); 
+    const type = $('#petType').val();
+
+    // Instantiate new Pet object
+    const newClient = new Pet(name, parseInt(age), gender, breed, service, type, paymentMethod);
 
     salon.registerNewPet(newClient);
 
-    // Reset the form after successful submission
-    e.target.reset();
+    // Reset the form and remove all red borders using jQuery
+    $form.get(0).reset(); // Native DOM reset on the form element
+    $form.find('.is-invalid').removeClass('is-invalid'); // Ensure no red borders remain
 }
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -139,7 +170,8 @@ document.addEventListener("DOMContentLoaded", function() {
     // If on registration.html: attach form listener AND display the table
     const registrationForm = document.getElementById('petRegistrationForm');
     if (registrationForm) {
-        registrationForm.addEventListener('submit', handleFormSubmission);
+        // Use jQuery to attach the submit listener
+        $('#petRegistrationForm').on('submit', handleFormSubmission);
     }
     
     const tableBody = document.querySelector('#petsTable tbody');

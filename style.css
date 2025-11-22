@@ -1,226 +1,247 @@
-/* ------------------------------------------- */
-/* 1. GLOBAL STYLES & WRAPPER                  */
-/* ------------------------------------------- */
-
+/* --- Global & Base Styles --- */
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #F7FFF7; 
-    min-height: 100vh; 
-    display: flex;
-    justify-content: center;
-    color: #003349;
+    background-color: #f4f4f4; /* Light background for contrast */
 }
 
 .main-wrapper {
-    width: 100%;
-    max-width: 1000px; 
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); 
+    /* Ensures content is centered on the page */
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-/* 2. HEADER & ICON STYLES                     */
+/* =======================================
+   1. DASHBOARD STYLING (FOR index.html)
+   ======================================= */
 
+/* --- Header & Banner Styling --- */
 .header-banner {
-    background-color: #1A535C;
+    background-color: #387062; /* Dark Teal background */
     color: white;
     text-align: center;
-    padding: 20px 0 60px 0; 
-    position: relative; 
-    min-height: 150px; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    padding: 40px 20px 80px; /* Extra bottom padding for the icon */
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .header-banner h1 {
     font-weight: bold;
-    margin-bottom: 0;
+    margin-bottom: 5px;
 }
 
 .tagline {
-    font-style: italic;
-    font-size: 1.1rem;
-    margin-top: 5px;
-    opacity: 0.8;
+    font-size: 1.1em;
 }
 
+/* --- Doberman Icon Styling --- */
 .doberman-icon-container {
     position: absolute;
-    bottom: -30px;
+    bottom: -50px; /* Moves the icon halfway out of the banner */
     left: 50%;
     transform: translateX(-50%);
-    width: 70px;
-    height: 70px;
-    background-color: #FFC300;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
-    padding: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    background-color: #f4f4f4; /* Match body background */
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    border: 5px solid white; /* White border around the icon */
     z-index: 10;
 }
 
 .doberman-icon {
     width: 100%;
     height: 100%;
-    border-radius: 50%;
     object-fit: cover;
 }
 
-
-/* 3. DASHBOARD (index.html) STYLES            */
-
-.dashboard-body {
-    background-image: url('boss_bg.jpg'); 
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    color: #fff;
-}
-
+/* --- Stats Boxes Section --- */
 .stats-section {
-    min-height: calc(100vh - 200px);
-    padding-top: 80px !important;
+    padding-top: 80px !important; /* Adjusts for the large icon overlapping the section */
 }
 
 .stat-box {
-    background-color: rgba(255, 255, 255, 0.9);
-    color: #003349;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    min-height: 200px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 25px !important;
+    min-height: 250px; /* Gives boxes a consistent size */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* REMOVED/COMMENTED OUT THE RED BORDER BELOW */
+    /* border-top: 5px solid #d85c88; */ 
+    transition: transform 0.2s;
+}
+
+.stat-box:hover {
+    transform: translateY(-3px);
 }
 
 .stat-heading {
-    color: #1A535C;
+    color: #387062; /* Dark Teal heading color */
     font-weight: bold;
-    border-bottom: 2px solid #4ECDC4;
-    padding-bottom: 10px;
     margin-bottom: 15px;
+    border-bottom: 2px solid #f4f4f4;
+    padding-bottom: 10px;
 }
 
 .stat-number {
-    font-size: 2.5rem;
-    font-weight: 900;
-    color: #FF6B6B;
+    font-size: 3em;
+    font-weight: bold;
+    color: #d85c88; /* Pink color for main numbers */
+    line-height: 1.1;
+    margin: 0;
 }
 
 .client-list {
-    max-height: 100px;
-    overflow-y: auto;
+    padding-left: 0; /* Remove default padding for ul */
 }
 
 .client-list li {
-    padding: 3px 0;
-    font-size: 1.1rem;
+    font-size: 1.1em;
+    padding: 2px 0;
 }
 
-/* Added back-to-dash-btn styles for use on index.html */
+/* --- Register Button Styling (Used in index.html and registration.html) --- */
 .back-to-dash-btn {
-    background-color: #4ECDC4;
-    border-color: #4ECDC4;
+    background-color: #51c4b7; /* Teal button color */
     color: white;
     font-weight: bold;
-    padding: 10px 20px;
+    padding: 15px 40px;
+    border-radius: 50px; /* Pill shape */
+    text-transform: uppercase;
+    letter-spacing: 1px;
     transition: background-color 0.3s;
+    box-shadow: 0 4px 10px rgba(81, 196, 183, 0.4);
 }
 
 .back-to-dash-btn:hover {
-    background-color: #1A535C;
-    border-color: #1A535C;
+    background-color: #3e9a8f;
     color: white;
 }
 
-
-/* 4. SERVICES (services.html) STYLES          */
-
-
-.services-page-bg {
-    background-image: url('shepherd.jpg'); 
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    color: #fff;
+/* --- Footer Styling --- */
+.main-footer {
+    background-color: #333;
+    color: #aaa;
+    text-align: center;
+    padding: 15px 0;
+    margin-top: 50px;
 }
 
-.services-content-section {
-    min-height: calc(100vh - 200px);
-    padding-top: 80px !important;
-}
+/* =======================================
+   2. APPOINTMENT FORM STYLING (FOR services.html)
+   ======================================= */
 
-/* --- NEW: FLEXBOX CONTAINER  --- */
-.service-cards {
+.appointment-form-area {
+    /* Ensures the form is centered within the main-content-wrapper (or body) */
     display: flex;
-    justify-content: space-between; 
-    gap: 20px; 
-    flex-wrap: wrap; 
-    padding: 0 15px; 
+    justify-content: center;
+    width: 100%;
+    padding-bottom: 50px;
+    margin-top: 30px; 
 }
-/* ----------------------------------------------------- */
 
-.service-list-box {
-    background-color: rgba(255, 255, 255, 0.95);
-    color: #003349;
-    border-radius: 15px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+.appointment-form-container {
+    /* Centering the form on the page - adjust as needed */
+    margin: 50px auto;
+    width: 400px; /* Adjust width as needed */
+    max-width: 90%;
     
-    flex: 1 1 30%; 
-    min-width: 280px;
+    /* Box shadow to match the floating card look */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 4px; /* Slight border radius for the overall container */
+    background-color: #ffffff;
+}
+
+.appointment-form-header {
+    background-color: #51c4b7; /* Teal/Turquoise color */
+    color: white;
+    padding: 15px 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.appointment-form-body {
+    padding: 20px;
+}
+
+.form-group {
     margin-bottom: 20px;
 }
 
-.service-list-box h2 {
-    color: #FF6B6B;
-    font-weight: 900;
+.form-group label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #333; /* Darker text for labels */
 }
 
-.service-group {
-    background-color: #F7FFF7;
-    border-radius: 8px;
-    border: 1px solid #B0BEC5;
-}
-
-.service-group .group-title {
-    color: #1A535C;
-    font-weight: bold;
-    font-size: 1.3rem;
-    padding-bottom: 5px;
-    margin-bottom: 10px;
-    border-bottom: 1px dashed #B0BEC5;
-}
-
-.service-list li {
-    padding: 5px 0;
-    color: #003349;
-}
-
-
-/* 5. FOOTER STYLES                            */
-
-.main-footer {
-    background-color: #4ECDC4;
-    color: white;
-    text-align: center;
+/* Style for the input fields and select */
+.appointment-form-body input[type="text"],
+.appointment-form-body select {
     width: 100%;
-    margin-top: auto; 
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box; /* Include padding/border in the element's total width and height */
+    font-size: 1em;
 }
 
+/* Custom styling for the select/dropdown (For the custom arrow) */
+.custom-select {
+    position: relative;
+    width: 100%;
+}
 
-/* 6. RESPONSIVENESS                           */
+.custom-select select {
+    appearance: none; /* Remove default arrow in some browsers */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #fff;
+    cursor: pointer;
+}
 
-@media (max-width: 768px) {
-    .header-banner {
-        padding: 15px 0 50px 0;
-    }
-    .doberman-icon-container {
-        width: 60px;
-        height: 60px;
-        bottom: -25px;
-    }
-    .stat-box {
-        min-height: auto;
-    }
-    /* ADDED RESPONSIVENESS FOR SERVICE CARDS */
-    .service-list-box {
-        flex: 1 1 100%; 
-    }
+/* The custom down arrow (using ::after for a cleaner look) */
+.custom-select::after {
+    content: "v"; /* Simple character or use a proper icon/svg */
+    font-family: Arial, sans-serif;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    pointer-events: none; /* Allows clicks to pass through to the select element */
+    color: #666;
+}
+
+/* Styling for the action buttons */
+.form-actions {
+    display: flex;
+    justify-content: flex-start; /* Buttons start from the left */
+    gap: 10px; /* Space between buttons */
+    margin-top: 30px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.9em;
+    min-width: 100px; /* Ensure buttons have a similar minimum size */
+}
+
+.btn-register {
+    background-color: #4285f4; /* Bright Blue */
+    color: white;
+}
+
+.btn-cancel {
+    background-color: #808080; /* Grey */
+    color: white;
 }

@@ -3,82 +3,348 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pimp your Pet - Services</title>
+    <title>Pet Services & Appointment Booking</title>
     
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" 
-          rel="stylesheet" 
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
-          crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css"> 
+    <style>
+        /* --- General Body and Page Layout --- */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-color: #f4f4f4; 
+        }
+        
+        /* --- CONTAINER FOR IMAGE BACKGROUND --- */
+        .top-image-wrapper {
+            height: 500px; 
+            width: 100%;
+            position: relative;
+            background-image: url('./shepherd.jpg'); 
+            background-size: cover;
+            background-position: center top; 
+            background-attachment: fixed; 
+            z-index: 0;
+        }
+
+        /* --- Header Section (Dark Teal Bar) --- */
+        .header-section {
+            background-color: #387062; 
+            color: white;
+            text-align: center;
+            padding: 30px 20px 60px;
+            position: absolute; 
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 2; 
+        }
+
+        .header-section h1 {
+            font-size: 2.5em;
+            margin-bottom: 5px;
+        }
+        
+        .header-section p {
+            margin-top: 0;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
+        .dog-icon {
+            position: absolute;
+            bottom: -30px; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            background: url('doberman.jpg') no-repeat center center; 
+            background-size: cover;
+            background-color: #fcfcfc; 
+            border-radius: 50%;
+            z-index: 3;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Wrapper to center the main content (Menu and Form) */
+        .main-content-wrapper {
+            display: flex;
+            flex-direction: column; 
+            align-items: center; 
+            padding: 0 10px;
+            position: relative;
+            z-index: 1; 
+        }
+
+        /* --- Service Menu Card Styles --- */
+        .service-menu-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: 90%; 
+            max-width: 900px;
+            margin-top: -300px; 
+            margin-bottom: 40px; 
+            text-align: center;
+            position: relative; 
+            z-index: 10; 
+        }
+
+        .menu-title {
+            color: #d85c88; 
+            font-size: 1.8em;
+            margin-bottom: 30px;
+        }
+
+        .menu-columns {
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+            text-align: left;
+            flex-wrap: wrap; 
+        }
+
+        .service-column {
+            flex: 1 1 250px; 
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            min-height: 200px; 
+            background-color: #fcfcfc;
+        }
+
+        .service-column h3 {
+            color: #51c4b7; 
+            border-bottom: 2px solid #51c4b7;
+            padding-bottom: 5px;
+            margin-top: 0;
+            font-size: 1.2em;
+        }
+        
+        .service-column p {
+            font-size: 0.9em;
+            line-height: 1.6;
+        }
+
+        .back-button-container {
+            margin-top: 30px;
+        }
+
+        .btn-back {
+            background-color: #51c4b7;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        /* --- APPOINTMENT FORM STYLES (MATCHING IMAGE 2) --- */
+        .appointment-form-area {
+            display: flex;
+            justify-content: center;
+            width: 100%; 
+            padding-bottom: 50px;
+            margin-top: 30px; /* Added margin to separate from the service card */
+        }
+        
+        .appointment-form-container {
+            background-color: white; /* Changed background for contrast */
+            padding: 0; /* Remove padding from container itself, moved to inner div */
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); 
+            width: 450px; /* Adjusted width for the form from Image 2 */
+            max-width: 90%;
+            text-align: left; /* Align text within the form */
+            overflow: hidden; /* Ensures border-radius applies to header */
+        }
+
+        .appointment-form-header {
+            background-color: #51c4b7; /* Greenish background for header */
+            color: white;
+            padding: 15px 20px;
+            font-size: 1.4em;
+            font-weight: bold;
+            text-align: center;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            margin-bottom: 20px; /* Space between header and form fields */
+        }
+
+        .appointment-form-body {
+            padding: 0px 30px 30px; /* Padding for the content inside the form */
+        }
+
+        .appointment-form-body label {
+            display: block; /* Each label on its own line */
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+            font-size: 0.95em;
+        }
+
+        .appointment-form-body input[type="text"],
+        .appointment-form-body select {
+            width: calc(100% - 24px); /* Full width minus padding/border */
+            padding: 10px 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+            box-sizing: border-box; /* Include padding/border in width */
+            background-color: #fff;
+        }
+
+        .appointment-form-body input[readonly] {
+            background-color: #eee; /* Grey out readonly price field */
+        }
+
+        .form-buttons {
+            text-align: right; /* Align buttons to the right */
+            margin-top: 25px; /* Space above buttons */
+        }
+
+        .form-buttons button {
+            padding: 10px 25px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1em;
+            margin-left: 10px; /* Space between buttons */
+            transition: background-color 0.3s ease;
+        }
+
+        .form-buttons .btn-register {
+            background-color: #007bff; /* Blue for Register */
+            color: white;
+        }
+
+        .form-buttons .btn-register:hover {
+            background-color: #0056b3;
+        }
+
+        .form-buttons .btn-cancel {
+            background-color: #6c757d; /* Grey for Cancel */
+            color: white;
+        }
+
+        .form-buttons .btn-cancel:hover {
+            background-color: #5a6268;
+        }
+
+        /* --- Back to Dashboard Button (below the new form) --- */
+        .dashboard-btn-bottom {
+            margin-top: 40px; /* Space from the form */
+            margin-bottom: 50px;
+            text-align: center;
+        }
+        .dashboard-btn-bottom .btn-back {
+            background-color: #51c4b7;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-block;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease;
+        }
+        .dashboard-btn-bottom .btn-back:hover {
+            background-color: #3e9a8f;
+        }
+
+    </style>
 </head>
-<body class="services-page-bg"> 
+<body>
+    <div class="top-image-wrapper">
+        </div>
 
-    <div class="main-wrapper">
-        <header class="header-banner">
-            <h1 class="display-5">Pimp your Pet</h1>
-            <p class="tagline">Our Luxurious Services</p>
-            
-            <div class="doberman-icon-container">
-                <img src="doberman.jpg" alt="Doberman Icon" class="doberman-icon"> 
-            </div>
-        </header>
-
-        <section class="services-content-section py-5">
-            <div class="container my-4 p-4 service-list-box">
-                <h2 class="text-center mb-4">🐾 Complete Service Menu 🐾</h2>
-                
-                <div class="row">
-                    <div class="col-md-4 mb-4">
-                        <div class="service-group p-3">
-                            <h3 class="group-title">Grooming Packages</h3>
-                            <ul class="list-unstyled service-list">
-                                <li>**Full Grooming** - Includes bath, cut, dry, and brush. ($65)</li>
-                                <li>**De-shedding Treatment** - Specialized bath and brushing for heavy shedders. ($35)</li>
-                                <li>**Deep Conditioning Wash** - Moisturizing bath and blow-dry. ($40)</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 mb-4">
-                        <div class="service-group p-3">
-                            <h3 class="group-title">Health & Wellness</h3>
-                            <ul class="list-unstyled service-list">
-                                <li>**Nail Trim & Filing** - Gentle trim followed by filing. ($15)</li>
-                                <li>**Dental Cleaning** - Non-anesthetic dental hygiene service. ($80)</li>
-                                <li>**Paw Pad Treatment** - Moisturizing balm and light massage. ($10)</li>
-                            </ul>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-4 mb-4">
-                        <div class="service-group p-3">
-                            <h3 class="group-title">Specialty Services</h3>
-                            <ul class="list-unstyled service-list">
-                                <li>**Blueberry Facial** - Brightening and stain reduction. ($15)</li>
-                                <li>**Creative Color** - Temporary, pet-safe hair color application. (Price Varies)</li>
-                                <li>**Medicated Bath** - Veterinary-prescribed shampoo treatment. ($25)</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
-                
-                <div class="text-center mt-4">
-                    <a href="index.html" class="btn btn-lg back-to-dash-btn">
-                        ← Back to Dashboard
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <footer class="main-footer py-3">
-            <p class="mb-0">&copy; 2025 Pimp Your Pet Salon</p>
-        </footer>
+    <div class="header-section">
+        <h1>Pet Grooming & Spa Services</h1>
+        <p>Book your pet's appointment today for a luxurious experience!</p>
+        <div class="dog-icon"></div>
     </div>
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
-            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
-            crossorigin="anonymous">
-    </script>
+
+    <div class="main-content-wrapper">
+        
+        <div class="service-menu-card">
+            <h2 class="menu-title">Our Pampering Packages</h2>
+            <div class="menu-columns">
+                
+                <div class="service-column">
+                    <h3>Baths & Basics</h3>
+                    <p>Full Grooming: Shampoo, Conditioning, Blow Dry, Brush Out, Hair Cut.</p>
+                    <p>Deep Conditioning Wash: Specialty shampoo, deep conditioning treatment.</p>
+                    <p>Nail Trim & Filing: Quick trim and smooth filing.</p>
+                </div>
+
+                <div class="service-column">
+                    <h3>Specialty Treatments</h3>
+                    <p>De-shedding Treatment: Reduces shedding by up to 80%.</p>
+                    <p>Dental Cleaning: Non-anesthetic dental cleaning.</p>
+                    <p>Paw Pad Treatment: Moisturizing and soothing paw balm.</p>
+                </div>
+                
+                <div class="service-column">
+                    <h3>Luxury Add-Ons</h3>
+                    <p>Blueberry Facial: Stain-reducing facial scrub.</p>
+                    <p>Scented Spritz: Choose from a variety of premium colognes.</p>
+                    <p>Pet-Safe Hair Coloring: Temporary, vibrant coloring.</p>
+                </div>
+                
+            </div>
+            
+            <div class="back-button-container">
+                <a href="index.html" class="btn-back">← Back to Dashboard</a>
+            </div>
+        </div>
+        
+        <div class="appointment-form-area">
+            <div class="appointment-form-container">
+                <div class="appointment-form-header">
+                    Book a Service for Appointment
+                </div>
+                <div class="appointment-form-body">
+                    <form>
+                        <label for="select-service">Select Service</label>
+                        <select id="select-service" name="service">
+                            <option value="">Select Service</option>
+                            <option value="full-grooming">Full Grooming</option>
+                            <option value="deep-conditioning">Deep Conditioning Wash</option>
+                            <option value="nail-trim">Nail Trim & Filing</option>
+                            <option value="de-shedding">De-shedding Treatment</option>
+                            <option value="dental-cleaning">Dental Cleaning</option>
+                            <option value="paw-treatment">Paw Pad Treatment</option>
+                            <option value="blueberry-facial">Blueberry Facial</option>
+                            <option value="scented-spritz">Scented Spritz</option>
+                            <option value="hair-coloring">Pet-Safe Hair Coloring</option>
+                        </select>
+
+                        <label for="description">Description</label>
+                        <input type="text" id="description" name="description" placeholder="Any specific instructions or notes">
+
+                        <label for="price">Price ($)</label>
+                        <input type="text" id="price" name="price" value="Varies - Contact Us" readonly>
+
+                        <div class="form-buttons">
+                            <button type="submit" class="btn-register">REGISTER</button>
+                            <button type="button" class="btn-cancel">CANCEL</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="dashboard-btn-bottom">
+            <a href="index.html" class="btn-back">← Back to Dashboard</a>
+        </div>
+
+    </div> 
 </body>
 </html>

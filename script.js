@@ -1,24 +1,25 @@
 class Pet {
-    // UPDATED: Constructor now accepts 'paymentMethod'
-    constructor(name, age, gender, breed, service, type, paymentMethod) { 
+    // UPDATED: Constructor now accepts 'paymentMethod' and 'retainer'
+    constructor(name, age, gender, breed, service, type, paymentMethod, retainer) { 
         this.Name = name;
         this.Age = parseInt(age);
         this.Gender = gender;
         this.Breed = breed;
         this.Service = service;
         this.Type = type;
-        this.PaymentMethod = paymentMethod; // NEW PROPERTY
+        this.PaymentMethod = paymentMethod;
+        this.Retainer = retainer; // NEW PROPERTY
     }
 }
 
 const salon = {
-    // UPDATED: Initial clients now include 'PaymentMethod'
+    // UPDATED: Initial clients now include 'PaymentMethod' and 'Retainer'
     clients: [
-        new Pet("Kobie", 3, "Male", "Cane Corso", "Full Grooming", "Dog", "Card"),
-        new Pet("Cooper", 7, "Female", "German Shepherd", "Nail Trim & Filing", "Dog", "Cash"),
-        new Pet("Barkley", 5, "Male", "Doberman", "Dental Cleaning", "Dog", "Venmo"),
-        new Pet("Shep", 4, "Male", "Belgian Malinois", "De-shedding Treatment", "Dog", "Card"),
-        new Pet("Boss", 6, "Male", "Thai Ridgeback", "Deep Conditioning Wash", "Dog", "Cash")
+        new Pet("Kobie", 3, "Male", "Cane Corso", "Full Grooming", "Dog", "Card", "Monthly"),
+        new Pet("Cooper", 7, "Female", "German Shepherd", "Nail Trim & Filing", "Dog", "Cash", "Bi-Weekly"),
+        new Pet("Barkley", 5, "Male", "Doberman", "Dental Cleaning", "Dog", "Venmo", "None"),
+        new Pet("Shep", 4, "Male", "Belgian Malinois", "De-shedding Treatment", "Dog", "Card", "Weekly"),
+        new Pet("Boss", 6, "Male", "Thai Ridgeback", "Deep Conditioning Wash", "Dog", "Cash", "None")
     ],
 
     calculateAverageAge: function() {
@@ -71,6 +72,9 @@ const salon = {
         // Loop through the clients array
         for (let i = 0; i < this.clients.length; i++) {
             const pet = this.clients[i];
+            // Format retainer for display
+            const retainerDisplay = pet.Retainer === 'None' ? '—' : `${pet.Retainer} Retainer`;
+            
             html += `
                 <tr class="align-middle">
                     <td class="text-center">${i + 1}</td>
@@ -80,6 +84,7 @@ const salon = {
                     <td>${pet.Breed}</td>
                     <td>${pet.Service}</td>
                     <td class="text-uppercase fw-bold">${pet.PaymentMethod}</td> 
+                    <td class="text-center">${retainerDisplay}</td>
                     <td class="text-center">
                         <button class="btn btn-sm btn-danger shadow-sm" onclick="salon.deletePet(${i})">
                             <i class="fas fa-trash-alt me-1"></i> Delete
@@ -111,7 +116,7 @@ function handleFormSubmission(e) {
     // --- Validation using jQuery ---
     $requiredFields.each(function() {
         const $field = $(this);
-        const value = $field.val().trim();
+        const value = $field.val() ? $field.val().toString().trim() : ''; 
         
         let fieldIsValid = true;
 
@@ -129,13 +134,15 @@ function handleFormSubmission(e) {
         
         // Highlight field if invalid
         if (!fieldIsValid) {
-            $field.addClass('is-invalid'); // Adds red border
+            $field.addClass('is-invalid'); // Adds red border (Bootstrap class)
             isValid = false;
         }
     });
 
     // Stop submission if validation failed
     if (!isValid) {
+        // Hide the generic validation message since we use visual feedback
+        $('#validationMessage').addClass('d-none').text('');
         return; 
     }
 
@@ -149,15 +156,19 @@ function handleFormSubmission(e) {
     const service = $('#petService').val();
     const paymentMethod = $('#petPayment').val(); 
     const type = $('#petType').val();
+    const retainer = $('#petRetainer').val(); // Read the new retainer field
 
-    // Instantiate new Pet object
-    const newClient = new Pet(name, parseInt(age), gender, breed, service, type, paymentMethod);
+    // Instantiate new Pet object (Passing all 8 required arguments)
+    const newClient = new Pet(name, parseInt(age), gender, breed, service, type, paymentMethod, retainer);
 
     salon.registerNewPet(newClient);
 
     // Reset the form and remove all red borders using jQuery
     $form.get(0).reset(); // Native DOM reset on the form element
     $form.find('.is-invalid').removeClass('is-invalid'); // Ensure no red borders remain
+    
+    // Hide the generic validation message on success
+    $('#validationMessage').addClass('d-none').text('');
 }
 
 document.addEventListener("DOMContentLoaded", function() {

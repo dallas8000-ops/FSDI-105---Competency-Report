@@ -2,14 +2,15 @@
 // separate from the main salon application logic in script.js.
 
 // 1. Create 5 pet object literals, matching the initial clients in script.js
-// All objects now include the new attribute: paymentMethod
+// All objects now include the new attributes: paymentMethod and retainer
 let pet1 = {
    name: "Kobie",
    age: 3,
    gender: "Male",
    service: "Full Grooming",
    breed: "Cane Corso",
-   paymentMethod: "Card" // Added
+   paymentMethod: "Card",
+   retainer: "Monthly" // Added
 };
 
 let pet2 = {
@@ -18,7 +19,8 @@ let pet2 = {
    gender: "Female",
    service: "Nail Trim & Filing",
    breed: "German Shepherd",
-   paymentMethod: "Cash" // Added
+   paymentMethod: "Cash",
+   retainer: "Bi-Weekly" // Added
 };
 
 let pet3 = {
@@ -27,7 +29,8 @@ let pet3 = {
    gender: "Male",
    service: "Dental Cleaning",
    breed: "Doberman",
-   paymentMethod: "Venmo" // Added
+   paymentMethod: "Venmo",
+   retainer: "None" // Added
 };
 
 let pet4 = {
@@ -36,7 +39,8 @@ let pet4 = {
    gender: "Male",
    service: "De-shedding Treatment",
    breed: "Belgian Malinois",
-   paymentMethod: "Card" // Added
+   paymentMethod: "Card",
+   retainer: "Weekly" // Added
 };
 
 let pet5 = {
@@ -45,7 +49,8 @@ let pet5 = {
    gender: "Male",
    service: "Deep Conditioning Wash",
    breed: "Thai Ridgeback",
-   paymentMethod: "Cash" // Added
+   paymentMethod: "Cash",
+   retainer: "None" // Added
 };
 
 // 2. Create a list of pets (array)

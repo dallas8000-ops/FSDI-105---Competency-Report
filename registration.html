@@ -10,184 +10,216 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
           crossorigin="anonymous">
     
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
     <link rel="stylesheet" href="style.css"> 
 
     <style>
-        
-        body {
-            /* Keep background image from existing style */
-            background-image: url('boss_bg.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+        /* Container for the form and table */
+        .content-container {
+            /* FIX: Changed from rgba(255, 255, 255, 0.95) to fully opaque white for readability */
+            background-color: white; 
             
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* REVERTED: Large Header Banner */
-        header {
+            padding: 2.5rem;
+            border-radius: 1rem;
+            /* FIX: Stronger shadow for better separation from the background image */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); 
+            
             width: 100%;
-            background-color: #265452; 
-            color: white;
-            text-align: center;
-            padding: 20px 0;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-        }
-
-        header h1 {
-            font-weight: bold;
-            margin-bottom: 0;
-        }
-        
-        .page-content-container {
-            padding: 30px;
-            margin-top: 30px;
-            margin-bottom: 30px;
             max-width: 900px;
-            width: 95%;
+            margin-top: 50px;
         }
 
-        /* FORM Container (for white background and shadow) */
-        .registration-form-container {
-            background-color: rgba(255, 255, 255, 1);
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            margin-bottom: 40px;
-        }
-
-        /* TABLE Container (for white background and shadow) */
-        .table-container {
-            background-color: rgba(255, 255, 255, 1);
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-        }
-
-        .section-heading {
-            color: black; 
-            font-weight: 700;
-            margin-bottom: 25px;
-            text-align: left;
-            font-size: 1.75rem;
+        /* Ensure form inputs themselves have clear backgrounds */
+        .form-control, .form-select {
+            background-color: white; 
+            border: 1px solid #ccc; /* Add a subtle border for definition */
         }
         
-        .btn-dark {
-            background-color: black;
-            border-color: black;
+        /* Dark Mode specific styling to maintain high contrast */
+        .dark-mode .content-container {
+            /* Use the dark box background color defined in style.css variables */
+            background-color: var(--clr-box-bg) !important;
         }
 
-        /* Styling for the table headers to be visible against white */
-        #petsTable thead th {
-            color: black;
-            font-weight: bold;
-            border-bottom: 2px solid #dee2e6;
+        .dark-mode .form-control, 
+        .dark-mode .form-select {
+            background-color: #333; /* Darker background for inputs */
+            color: var(--clr-text-main); /* Light text color for input values */
+            border-color: #555;
         }
         
+        /* FIX: Ensure labels and table content are visible in dark mode */
+        .dark-mode label, 
+        .dark-mode #petsTable,
+        .dark-mode h2 {
+            /* Use the light text variable for maximum contrast */
+            color: var(--clr-text-main) !important; 
+        }
+
+        /* Ensure table text remains light, as Bootstrap tables can override it */
+        .dark-mode #petsTable tbody tr {
+            color: var(--clr-text-main); 
+        }
+        /* Override Bootstrap's dark table header to ensure light text is used */
+        .dark-mode #petsTable thead.table-dark th {
+             color: white !important; /* Keep the header text clearly white */
+        }
+
     </style>
-</head>
-<body>
+</head><body class="registration-body-bg">
     
-    <header>
-        <h1>Pimp your Pet Services Registration</h1>
-        <p>Register new clients and view the current roster.</p>
-    </header>
     <div class="main-wrapper">
-        
-        <div class="d-flex justify-content-center">
-            
-            <div class="page-content-container">
+        <div class="page-container">
+            <div class="container-fluid p-0">
                 
-                <div class="registration-form-container">
-                    <section>
-                        <h2 class="section-heading">Register</h2>
-                        
-                        <form id="petRegistrationForm">
-                            
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="petName" class="form-label">Name:</label>
-                                    <input type="text" class="form-control" id="petName" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="petAge" class="form-label">Age:</label>
-                                    <input type="number" class="form-control" id="petAge" min="0" required>
-                                </div>
-                            </div>
+                <header class="header-banner">
+                    <h1 class="display-5">Client Registration</h1>
+                    <p class="tagline">Manage your pets here.</p>
+                    
+                    <button id="darkModeToggle" class="btn btn-sm" 
+                            style="position: absolute; top: 15px; right: 15px; z-index: 20;">
+                        <i class="fas fa-moon"></i> Dark Mode
+                    </button>
+                    
+                    <div class="doberman-icon-container">
+                        <img src="doberman.jpg" alt="Doberman Icon" class="doberman-icon"> 
+                    </div>
+                </header>
 
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="petGender" class="form-label">Gender:</label>
-                                    <select class="form-select" id="petGender" required>
-                                        <option value="" disabled selected>Select Gender</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="petBreed" class="form-label">Breed:</label>
-                                    <input type="text" class="form-control" id="petBreed" required>
-                                </div>
-                            </div>
-                            
-                            <div class="row mb-4">
-                                <div class="col-12">
-                                    <label for="petService" class="form-label">Service:</label>
-                                    <select class="form-select" id="petService" required>
-                                        <option value="" disabled selected>Select a Service</option>
-                                        <option value="Full Grooming">Full Grooming</option>
-                                        <option value="Nail Trim & Filing">Nail Trim & Filing</option>
-                                        <option value="Dental Cleaning">Dental Cleaning</option>
-                                        <option value="De-shedding Treatment">De-shedding Treatment</option>
-                                        <option value="Deep Conditioning Wash">Deep Conditioning Wash</option>
-                                        <option value="Blueberry Facial">Blueberry Facial</option>
-                                    </select>
-                                </div>
-                            </div>
-                            
-                            <input type="hidden" id="petType" value="Dog"> 
-                            
-                            <div class="pt-3">
-                                <button type="submit" class="btn btn-dark">Register</button>
-                            </div>
+                <div class="row justify-content-center">
+                    
+                    <div class="col-12">
+                        <section class="registration-form-section py-5">
+                            <div class="content-container mx-auto">
+                                <h2 class="text-center mb-4">Register New Pet</h2>
+                                
+                                <form id="petRegistrationForm">
+                                    <input type="hidden" id="petId" value="">
+                                    
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="txtName" class="form-label">Name:</label>
+                                            <input type="text" class="form-control" id="txtName" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="txtAge" class="form-label">Age (Years):</label>
+                                            <input type="number" class="form-control" id="txtAge" min="0" required>
+                                        </div>
+                                    </div>
 
-                        </form>
-                    </section>
-                </div>
-                
-                <div class="table-container">
-                    <section>
-                        <h2 class="section-heading">Registered pets</h2>
-                        
-                        <div class="table-responsive">
-                            <table class="table **table-striped**" id="petsTable">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Name</th>
-                                        <th>Age</th>
-                                        <th>Gender</th>
-                                        <th>Breed</th>
-                                        <th>Service</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    </tbody>
-                            </table>
-                        </div>
-                    </section>
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="selGender" class="form-label">Gender:</label>
+                                            <select class="form-select" id="selGender" required>
+                                                <option value="" disabled selected>Select Gender</option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="txtBreed" class="form-label">Breed:</label>
+                                            <input type="text" class="form-control" id="txtBreed" required>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="selService" class="form-label">Service:</label>
+                                            <select class="form-select" id="selService" required>
+                                                <option value="" disabled selected>Select Service</option>
+                                                <option value="Full Grooming">Full Grooming</option>
+                                                <option value="Nail Trim & Filing">Nail Trim & Filing</option>
+                                                <option value="Dental Cleaning">Dental Cleaning</option>
+                                                <option value="De-shedding Treatment">De-shedding Treatment</option>
+                                                <option value="Deep Conditioning Wash">Deep Conditioning Wash</option>
+                                                <option value="Paw Pad Treatment">Paw Pad Treatment</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="selType" class="form-label">Type:</label>
+                                            <select class="form-select" id="selType" required>
+                                                <option value="" disabled selected>Select Type</option>
+                                                <option value="Dog">Dog</option>
+                                                <option value="Cat">Cat</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label for="selPayment" class="form-label">Payment Method:</label>
+                                            <select class="form-select" id="selPayment" required>
+                                                <option value="" disabled selected>Select Payment</option>
+                                                <option value="Card">Card</option>
+                                                <option value="Cash">Cash</option>
+                                                <option value="Venmo">Venmo</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="selRetainer" class="form-label">Retainer:</label>
+                                            <select class="form-select" id="selRetainer" required>
+                                                <option value="" disabled selected>Select Retainer</option>
+                                                <option value="Weekly">Weekly</option>
+                                                <option value="Bi-Weekly">Bi-Weekly</option>
+                                                <option value="Monthly">Monthly</option>
+                                                <option value="None">None</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-center mt-4">
+                                        <button type="submit" class="btn btn-primary me-2 btn-register" id="addPetBtn">REGISTER</button>
+                                        <button type="button" class="btn btn-warning me-2" id="saveChangesBtn" style="display:none;">Save Changes</button>
+                                        <button type="reset" class="btn btn-secondary" id="cancelBtn">CANCEL</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-12">
+                        <section class="client-list-section py-4">
+                            <div class="content-container mx-auto">
+                                <h2 class="text-center mb-4">Current Client List</h2>
+                                <table class="table table-striped table-hover" id="petsTable">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Age</th>
+                                            <th>Type</th>
+                                            <th>Gender</th>
+                                            <th>Breed</th>
+                                            <th>Service</th>
+                                            <th>Payment</th> 
+                                            <th>Retainer</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        </tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <a href="index.html" class="btn btn-lg back-to-dash-btn shadow me-3">
+                            ← Back to Dashboard
+                        </a>
+                        <a href="services.html" class="btn btn-lg back-to-dash-btn shadow">
+                            View Services & Book →
+                        </a>
+                    </div>
                     
                 </div>
-                
             </div>
-            
         </div>
     </div>
 
     <script src="script.js"></script> 
-    
+    <script src="registration.js"></script> 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
             crossorigin="anonymous">

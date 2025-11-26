@@ -9,63 +9,128 @@
           rel="stylesheet" 
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
           crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+          
     <link rel="stylesheet" href="style.css"> 
+    
+    <style>
+        /* The inline styles were kept minimal, linking to style.css is preferred */
+    </style>
 </head>
 <body class="services-page-bg"> 
-
     <div class="main-wrapper">
+        
         <header class="header-banner">
-            <h1 class="display-5">Pimp your Pet</h1>
-            <p class="tagline">Our Luxurious Services</p>
+            <h1 class="display-5">Our Premium Services</h1>
+            <p class="tagline">From head to paw, we offer the best pampering.</p>
+            
+            <button id="darkModeToggle" class="btn btn-sm" 
+                    style="position: absolute; top: 15px; right: 15px; z-index: 20;">
+                <i class="fas fa-moon"></i> Dark Mode
+            </button>
             
             <div class="doberman-icon-container">
                 <img src="doberman.jpg" alt="Doberman Icon" class="doberman-icon"> 
             </div>
         </header>
 
-        <section class="services-content-section py-5">
-            <div class="container my-4 p-4 service-list-box">
-                <h2 class="text-center mb-4">🐾 Complete Service Menu 🐾</h2>
-                
-                <div class="row">
-                    <div class="col-md-4 mb-4">
-                        <div class="service-group p-3">
-                            <h3 class="group-title">Grooming Packages</h3>
-                            <ul class="list-unstyled service-list">
-                                <li>**Full Grooming** - Includes bath, cut, dry, and brush. ($65)</li>
-                                <li>**De-shedding Treatment** - Specialized bath and brushing for heavy shedders. ($35)</li>
-                                <li>**Deep Conditioning Wash** - Moisturizing bath and blow-dry. ($40)</li>
-                            </ul>
+        <section class="services-content py-5">
+            <div class="container my-4">
+                <h2 class="text-center services-h2">Available Pet Pampering Services</h2>
+
+                <div class="row service-cards justify-content-center mb-5"> 
+                    
+                    <div class="col-12 col-md-4 mb-4 d-flex">
+                        <div class="service-list-box p-3 h-100">
+                            <h2 class="text-center">Grooming Packages</h2>
+                            <div class="service-group p-3">
+                                <h3 class="group-title">Full Grooming</h3>
+                                <p class="mb-1">Includes bath, cut, dry, and brush. ($65)</p>
+                            </div>
+                            <div class="service-group p-3 mt-3">
+                                <h3 class="group-title">De-shedding Treatment</h3>
+                                <p class="mb-1">Specialized bath and brushing for heavy shedders. ($35)</p>
+                            </div>
+                            <div class="service-group p-3 mt-3">
+                                <h3 class="group-title">Deep Conditioning Wash</h3>
+                                <p class="mb-1">Moisturizing bath and blow-dry. ($40)</p>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="col-md-4 mb-4">
-                        <div class="service-group p-3">
-                            <h3 class="group-title">Health & Wellness</h3>
-                            <ul class="list-unstyled service-list">
-                                <li>**Nail Trim & Filing** - Gentle trim followed by filing. ($15)</li>
-                                <li>**Dental Cleaning** - Non-anesthetic dental hygiene service. ($80)</li>
-                                <li>**Paw Pad Treatment** - Moisturizing balm and light massage. ($10)</li>
-                            </ul>
+                    <div class="col-12 col-md-4 mb-4 d-flex">
+                        <div class="service-list-box p-3 h-100">
+                            <h2 class="text-center">Health & Wellness</h2>
+                            <div class="service-group p-3">
+                                <h3 class="group-title">Nail Trim & Filing</h3>
+                                <p class="mb-1">Gentle trim followed by filing. ($15)</p>
+                            </div>
+                            <div class="service-group p-3 mt-3">
+                                <h3 class="group-title">Dental Cleaning</h3>
+                                <p class="mb-1">Non-anesthetic dental hygiene service. ($80)</p>
+                            </div>
+                            <div class="service-group p-3 mt-3">
+                                <h3 class="group-title">Paw Pad Treatment</h3>
+                                <p class="mb-1">Moisturizing balm and light massage. ($10)</p>
+                            </div>
                         </div>
                     </div>
-                    
-                    <div class="col-md-4 mb-4">
-                        <div class="service-group p-3">
-                            <h3 class="group-title">Specialty Services</h3>
-                            <ul class="list-unstyled service-list">
-                                <li>**Blueberry Facial** - Brightening and stain reduction. ($15)</li>
-                                <li>**Creative Color** - Temporary, pet-safe hair color application. (Price Varies)</li>
-                                <li>**Medicated Bath** - Veterinary-prescribed shampoo treatment. ($25)</li>
-                            </ul>
+
+                    <div class="col-12 col-md-4 mb-4 d-flex">
+                        <div class="service-list-box p-3 h-100">
+                            <h2 class="text-center">Specialty Services</h2>
+                            <div class="service-group p-3">
+                                <h3 class="group-title">Blueberry Facial</h3>
+                                <p class="mb-1">Brightening and stain reduction. ($15)</p>
+                            </div>
+                            <div class="service-group p-3 mt-3">
+                                <h3 class="group-title">Creative Color</h3>
+                                <p class="mb-1">Temporary pet-safe coat coloring. (Ask for price)</p>
+                            </div>
                         </div>
                     </div>
 
                 </div>
-                
-                <div class="text-center mt-4">
-                    <a href="index.html" class="btn btn-lg back-to-dash-btn">
+                <div class="row justify-content-center mt-4">
+                    <div class="col-12 col-md-8">
+                        <div class="booking-console-box shadow">
+                            <div class="booking-header">
+                                Book Your Appointment
+                            </div>
+                            <form id="serviceBookingForm" class="p-3"> 
+                                <div class="mb-3">
+                                    <label for="bookPetName" class="form-label">Pet Name</label>
+                                    <input type="text" class="form-control" id="bookPetName" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="bookServiceSelect" class="form-label">Select Service</label>
+                                    <select class="form-select" id="bookServiceSelect" required>
+                                        <option value="">Choose a Service...</option> 
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="bookServiceDescription" class="form-label">Description</label>
+                                    <input type="text" class="form-control" id="bookServiceDescription" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="bookServicePrice" class="form-label">Price ($)</label>
+                                    <input type="text" class="form-control" id="bookServicePrice" readonly>
+                                </div>
+                                <div class="d-flex justify-content-center mt-4">
+                                    <button type="submit" class="btn btn-primary me-2 btn-register">BOOK APPOINTMENT</button>
+                                    <button type="reset" class="btn btn-secondary">CANCEL</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-5">
+                    <a href="index.html" class="btn btn-lg back-to-dash-btn me-3">
                         ← Back to Dashboard
+                    </a>
+                    <a href="registration.html" class="btn btn-lg back-to-dash-btn">
+                        Register New Client →
                     </a>
                 </div>
             </div>
@@ -75,6 +140,8 @@
             <p class="mb-0">&copy; 2025 Pimp Your Pet Salon</p>
         </footer>
     </div>
+    
+    <script src="script.js"></script> 
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 

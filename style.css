@@ -1,34 +1,74 @@
 /* ------------------------------------------- */
-/* 1. GLOBAL STYLES & WRAPPER                  */
+/* 0. CSS VARIABLES & DARK MODE SETUP          */
+/* ------------------------------------------- */
+
+:root {
+    /* Light Mode Palette */
+    --clr-body-bg: #F7FFF7; /* Light Mint Cream */
+    --clr-text-main: #003349; /* Dark Teal/Navy */
+    --clr-header-bg: #0A5C43; /* NEW: Darker Teal/Green Header */
+    --clr-header-text: white;
+    --clr-accent-primary: #FF6B6B; /* Coral Red (for stat numbers) */
+    --clr-accent-secondary: #4ECDC4; /* Bright Teal (for borders, buttons, footer) */
+    --clr-accent-gold: #FFC300; /* Gold (for Doberman icon/Title) */
+    --clr-box-bg: rgba(255, 255, 255, 0.9);
+    --clr-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    --clr-btn-hover-bg: #1A535C; 
+    --clr-btn-hover-text: white;
+}
+
+.dark-mode {
+    /* Dark Mode Overrides */
+    --clr-body-bg: #043927; /* NEW: Darkest Hunter Green for Background */
+    --clr-text-main: #E0E0E0; /* Light text */
+    --clr-header-bg: #0A5C43; /* NEW: Using the medium green for header */
+    --clr-header-text: #E0E0E0;
+    --clr-accent-primary: #92CDD0; /* Light Teal (new accent) */
+    --clr-accent-secondary: #FF6B6B; /* Re-using coral for dark mode contrast */
+    --clr-accent-gold: #FFD700;
+    --clr-box-bg: rgba(30, 30, 30, 0.95); /* Dark box background */
+    --clr-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    --clr-btn-hover-bg: #1E5631; /* NEW: Forest Green hover */
+    --clr-btn-hover-text: #E0E0E0;
+}
+
+/* ------------------------------------------- */
+/* 1. GLOBAL STYLES & WRAPPER (VARIABLES APPLIED)*/
 /* ------------------------------------------- */
 
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #F7FFF7; 
-    min-height: 100vh; 
+    background-color: var(--clr-body-bg);
+    min-height: 100vh;
     display: flex;
-    justify-content: center;
-    color: #003349;
+    flex-direction: column;
+    justify-content: space-between;
+    color: var(--clr-text-main);
+    transition: background-color 0.5s, color 0.5s;
 }
 
 .main-wrapper {
     width: 100%;
-    max-width: 1000px; 
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); 
+    max-width: 1200px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    flex-grow: 1;
+    margin: 0 auto;
+    padding: 0 20px;
 }
 
 /* 2. HEADER & ICON STYLES                     */
 
 .header-banner {
-    background-color: #1A535C;
-    color: white;
+    background-color: var(--clr-header-bg);
+    color: var(--clr-header-text);
     text-align: center;
-    padding: 20px 0 60px 0; 
-    position: relative; 
-    min-height: 150px; 
+    padding: 20px 0 60px 0;
+    position: relative;
+    min-height: 150px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.5s, color 0.5s;
 }
 
 .header-banner h1 {
@@ -48,179 +88,137 @@ body {
     bottom: -30px;
     left: 50%;
     transform: translateX(-50%);
-    width: 70px;
-    height: 70px;
-    background-color: #FFC300;
-    border-radius: 50%;
-    padding: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
     z-index: 10;
+    border: 5px solid var(--clr-accent-gold);
+    border-radius: 50%;
+    overflow: hidden;
+    width: 100px;
+    height: 100px;
+    background-color: white;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+    transition: border-color 0.5s, background-color 0.5s;
+}
+
+.dark-mode .doberman-icon-container {
+    background-color: #333;
 }
 
 .doberman-icon {
     width: 100%;
     height: 100%;
-    border-radius: 50%;
     object-fit: cover;
 }
 
+/* 3. BUTTON STYLES                            */
 
-/* 3. DASHBOARD (index.html) STYLES            */
-
-.dashboard-body {
-    background-image: url('boss_bg.jpg'); 
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    color: #fff;
+.back-to-dash-btn {
+    background-color: var(--clr-accent-secondary);
+    border-color: var(--clr-accent-secondary);
+    color: var(--clr-text-main);
+    font-weight: bold;
+    transition: background-color 0.3s, border-color 0.3s;
 }
 
+.back-to-dash-btn:hover {
+    background-color: var(--clr-btn-hover-bg);
+    border-color: var(--clr-btn-hover-bg);
+    color: var(--clr-btn-hover-text);
+}
+
+.btn-register {
+    background-color: var(--clr-accent-primary);
+    border-color: var(--clr-accent-primary);
+    color: white;
+    font-weight: bold;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.btn-register:hover {
+    background-color: #FF4444; /* Darker coral on hover (can be hardcoded) */
+    border-color: #FF4444;
+}
+
+/* 4. PAGE-SPECIFIC BACKGROUNDS & DARK MODE    */
+
+/* index.html body class (Dashboard page) */
+.dashboard-body {
+    background-color: #043927; /* Darkest Hunter Green */ 
+    background-image: url('Blaze.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* registration.html body class */
+.registration-body-bg {
+    background-image: url('boss_bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* services.html body class */
+.services-page-bg {
+    background-image: url('shepherd.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* Dark Mode overrides to remove image backgrounds for the special pages */
+.dark-mode .dashboard-body,
+.dark-mode .registration-body-bg,
+.dark-mode .services-page-bg {
+    background-image: none !important;
+    background-color: var(--clr-body-bg) !important;
+}
+
+/* 5. DASHBOARD (index.html) STYLES            */
+
 .stats-section {
-    min-height: calc(100vh - 200px);
     padding-top: 80px !important;
 }
 
 .stat-box {
-    background-color: rgba(255, 255, 255, 0.9);
-    color: #003349;
-    border-radius: 10px;
+    background-color: var(--clr-box-bg);
+    color: var(--clr-text-main);
+    border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    min-height: 200px;
+    border: 1px solid var(--clr-accent-secondary);
+    transition: background-color 0.5s, color 0.5s, border-color 0.5s, box-shadow 0.5s;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .stat-heading {
-    color: #1A535C;
+    color: var(--clr-accent-secondary);
     font-weight: bold;
-    border-bottom: 2px solid #4ECDC4;
+    border-bottom: 2px dashed var(--clr-accent-secondary);
     padding-bottom: 10px;
     margin-bottom: 15px;
+    transition: color 0.5s, border-color 0.5s;
 }
 
 .stat-number {
+    color: var(--clr-accent-primary);
     font-size: 2.5rem;
     font-weight: 900;
-    color: #FF6B6B;
-}
-
-.client-list {
-    max-height: 100px;
-    overflow-y: auto;
+    line-height: 1;
+    transition: color 0.5s;
 }
 
 .client-list li {
-    padding: 3px 0;
     font-size: 1.1rem;
+    font-weight: 600;
+    margin: 5px 0;
 }
 
-/* Added back-to-dash-btn styles for use on index.html */
-.back-to-dash-btn {
-    background-color: #4ECDC4;
-    border-color: #4ECDC4;
-    color: white;
-    font-weight: bold;
-    padding: 10px 20px;
-    transition: background-color 0.3s;
-}
-
-.back-to-dash-btn:hover {
-    background-color: #1A535C;
-    border-color: #1A535C;
-    color: white;
-}
-
-
-/* 4. SERVICES (services.html) STYLES          */
-
-
-.services-page-bg {
-    background-image: url('shepherd.jpg'); 
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center;
-    color: #fff;
-}
-
-.services-content-section {
-    min-height: calc(100vh - 200px);
-    padding-top: 80px !important;
-}
-
-/* --- NEW: FLEXBOX CONTAINER  --- */
-.service-cards {
-    display: flex;
-    justify-content: space-between; 
-    gap: 20px; 
-    flex-wrap: wrap; 
-    padding: 0 15px; 
-}
-/* ----------------------------------------------------- */
-
-.service-list-box {
-    background-color: rgba(255, 255, 255, 0.95);
-    color: #003349;
-    border-radius: 15px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-    
-    flex: 1 1 30%; 
-    min-width: 280px;
-    margin-bottom: 20px;
-}
-
-.service-list-box h2 {
-    color: #FF6B6B;
-    font-weight: 900;
-}
-
-.service-group {
-    background-color: #F7FFF7;
-    border-radius: 8px;
-    border: 1px solid #B0BEC5;
-}
-
-.service-group .group-title {
-    color: #1A535C;
-    font-weight: bold;
-    font-size: 1.3rem;
-    padding-bottom: 5px;
-    margin-bottom: 10px;
-    border-bottom: 1px dashed #B0BEC5;
-}
-
-.service-list li {
-    padding: 5px 0;
-    color: #003349;
-}
-
-
-/* 5. FOOTER STYLES                            */
-
+/* Footer Styles */
 .main-footer {
-    background-color: #4ECDC4;
-    color: white;
+    background-color: var(--clr-accent-secondary);
+    color: var(--clr-text-main);
     text-align: center;
     width: 100%;
-    margin-top: auto; 
-}
-
-
-/* 6. RESPONSIVENESS                           */
-
-@media (max-width: 768px) {
-    .header-banner {
-        padding: 15px 0 50px 0;
-    }
-    .doberman-icon-container {
-        width: 60px;
-        height: 60px;
-        bottom: -25px;
-    }
-    .stat-box {
-        min-height: auto;
-    }
-    /* ADDED RESPONSIVENESS FOR SERVICE CARDS */
-    .service-list-box {
-        flex: 1 1 100%; 
-    }
 }

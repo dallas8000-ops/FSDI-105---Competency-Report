@@ -2,12 +2,15 @@
 // separate from the main salon application logic in script.js.
 
 // 1. Create 5 pet object literals, matching the initial clients in script.js
+// All objects now include the new attributes: paymentMethod and retainer
 let pet1 = {
    name: "Kobie",
    age: 3,
    gender: "Male",
    service: "Full Grooming",
-   breed: "Cane Corso"
+   breed: "Cane Corso",
+   paymentMethod: "Card",
+   retainer: "Monthly" 
 };
 
 let pet2 = {
@@ -15,7 +18,9 @@ let pet2 = {
    age: 7,
    gender: "Female",
    service: "Nail Trim & Filing",
-   breed: "German Shepherd"
+   breed: "German Shepherd",
+   paymentMethod: "Cash",
+   retainer: "Bi-Weekly" 
 };
 
 let pet3 = {
@@ -23,7 +28,9 @@ let pet3 = {
    age: 5,
    gender: "Male",
    service: "Dental Cleaning",
-   breed: "Doberman"
+   breed: "Doberman",
+   paymentMethod: "Venmo",
+   retainer: "None" 
 };
 
 let pet4 = {
@@ -31,7 +38,9 @@ let pet4 = {
    age: 4,
    gender: "Male",
    service: "De-shedding Treatment",
-   breed: "Belgian Malinois"
+   breed: "Belgian Malinois",
+   paymentMethod: "Card",
+   retainer: "Weekly" 
 };
 
 let pet5 = {
@@ -39,7 +48,9 @@ let pet5 = {
    age: 6,
    gender: "Male",
    service: "Deep Conditioning Wash",
-   breed: "Thai Ridgeback"
+   breed: "Thai Ridgeback",
+   paymentMethod: "Cash",
+   retainer: "None" 
 };
 
 // 2. Create a list of pets (array)
@@ -65,15 +76,5 @@ function calculateAverageAge(list) {
     return (totalAge / list.length).toFixed(1);
 }
 
-const avgAge = calculateAverageAge(petsList);
-console.log(`Average Client Age: ${avgAge} years`); 
-
-// NEW FUNCTION: displayRow (replaces displayPet)
-function displayRow() {
-    // This function would typically handle the logic to render
-    // the pet data into a table row in the registration.html page.
-    console.log("The displayRow function would execute here to render data on the HTML page.");
-}
-
-// Example call of the new function
-displayRow();
+const averageAge = calculateAverageAge(petsList);
+console.log("Average Age:", averageAge);

@@ -1,5 +1,5 @@
 class Pet {
-    // UPDATED: Constructor now accepts all attributes
+    // UPDATED: Constructor now accepts 'paymentMethod' and 'retainer'
     constructor(name, age, gender, breed, service, type, paymentMethod, retainer) { 
         this.Name = name;
         this.Age = parseInt(age);
@@ -25,323 +25,380 @@ const serviceMenu = {
         { name: "Paw Pad Treatment", price: 10, description: "Moisturizing balm and light massage." }
     ],
     "Specialty Services": [
-        { name: "Blueberry Facial", price: 15, description: "Brightening and stain reduction." },
-        { name: "Creative Color", price: "Varies", description: "Temporary pet-safe coat coloring. Price requires consultation." }
+        { name: "Blueberry Facial", price: 10, description: "Tear stain removal and face brightening." },
+        { name: "Scented Spritz", price: 5, description: "A finishing spray with premium pet cologne." },
+        { name: "Pet-Safe Hair Coloring", price: 50, description: "Creative coloring using non-toxic, pet-safe dyes." }
     ]
 };
 
-
 class Salon {
-    constructor(name) {
-        this.name = name;
-        this.pets = [
-            new Pet("Kobie", 3, "Male", "Cane Corso", "Full Grooming", "Dog", "Card", "Monthly"),
-            new Pet("Cooper", 7, "Female", "German Shepherd", "Nail Trim & Filing", "Dog", "Cash", "Bi-Weekly"),
-            new Pet("Barkley", 5, "Male", "Doberman", "Dental Cleaning", "Dog", "Venmo", "None"),
-            new Pet("Shep", 4, "Male", "Belgian Malinois", "De-shedding Treatment", "Dog", "Card", "Weekly"),
-            new Pet("Boss", 6, "Male", "Thai Ridgeback", "Deep Conditioning Wash", "Dog", "Cash", "None"),
-        ];
+    constructor(petsList) {
+        this.pets = petsList.map((pet, index) => new Pet(
+            pet.name, 
+            pet.age, 
+            pet.gender, 
+            pet.breed, 
+            pet.service, 
+            pet.type || 'Dog', // Default to 'Dog' if type is missing from initial data
+            pet.paymentMethod, // New property
+            pet.retainer // New property
+        ));
+        this.nextId = this.pets.length + 1;
+    }
+
+    registerNewPet(name, age, gender, breed, service, type, paymentMethod, retainer) {
+        let newPet = new Pet(name, age, gender, breed, service, type, paymentMethod, retainer);
+        this.pets.push(newPet);
+        this.displayRow();
+    }
+
+    deletePet(id) {
+        // IDs are 1-based, array indices are 0-based
+        this.pets.splice(id - 1, 1); 
+        this.displayRow();
+    }
+
+    // New method to retrieve a pet by its 1-based ID for editing
+    getPetById(id) {
+        return this.pets[id - 1];
     }
     
-    // Method to register a new pet object
-    registerPet(pet) {
-        this.pets.push(pet);
-        console.log(`Pet ${pet.Name} registered!`);
+    // New method to handle updating an existing pet
+    updatePet(id, name, age, gender, breed, service, type, paymentMethod, retainer) {
+        let pet = this.getPetById(id);
+        if (pet) {
+            pet.Name = name;
+            pet.Age = parseInt(age);
+            pet.Gender = gender;
+            pet.Breed = breed;
+            pet.Service = service;
+            pet.Type = type;
+            pet.PaymentMethod = paymentMethod;
+            pet.Retainer = retainer;
+            this.displayRow(); // Re-render the table
+            return true;
+        }
+        return false;
     }
 
-    // Displays the current pets list in the table on registration.html
+    // Updated displayRow to include Payment and Retainer
     displayRow() {
         const tableBody = document.querySelector('#petsTable tbody');
         if (!tableBody) return;
-
-        tableBody.innerHTML = ''; // Clear table before displaying
+        
+        tableBody.innerHTML = '';
+        
         this.pets.forEach((pet, index) => {
-            let row = tableBody.insertRow();
+            const row = tableBody.insertRow();
+            const id = index + 1;
+            
+            // Add Pet ID
+            let cellId = row.insertCell();
+            cellId.textContent = id; 
+
+            // Add Pet properties
             row.insertCell().textContent = pet.Name;
             row.insertCell().textContent = pet.Age;
-            row.insertCell().textContent = pet.Type; // Added Type field to table display
             row.insertCell().textContent = pet.Gender;
             row.insertCell().textContent = pet.Breed;
             row.insertCell().textContent = pet.Service;
+            row.insertCell().textContent = pet.Type;
+            // NEW: Add Payment Method
             row.insertCell().textContent = pet.PaymentMethod; 
-            row.insertCell().textContent = pet.Retainer;
-            
-            // Add Action Cell (Combined Edit and Delete)
-            let actionCell = row.insertCell();
+            // NEW: Add Retainer Schedule (centered)
+            let cellRetainer = row.insertCell();
+            cellRetainer.textContent = pet.Retainer;
+            cellRetainer.classList.add('text-center');
 
-            // --- NEW: Add Edit Button ---
-            let editBtn = document.createElement('button');
-            editBtn.className = 'btn btn-warning btn-sm me-2';
+            // Add Actions (Edit/Delete buttons)
+            let cellActions = row.insertCell();
+            cellActions.classList.add('text-center');
+            
+            // Edit Button
+            const editBtn = document.createElement('button');
             editBtn.textContent = 'Edit';
-            editBtn.onclick = () => this.editPet(index);
-            actionCell.appendChild(editBtn);
-            
-            // Add Delete Button
-            let deleteBtn = document.createElement('button');
-            deleteBtn.className = 'btn btn-danger btn-sm';
+            editBtn.classList.add('btn', 'btn-sm', 'btn-info', 'me-2');
+            editBtn.addEventListener('click', () => {
+                // Pass the 1-based ID for lookup
+                handleEdit(id); 
+            });
+            cellActions.appendChild(editBtn);
+
+            // Delete Button
+            const deleteBtn = document.createElement('button');
             deleteBtn.textContent = 'Delete';
-            deleteBtn.onclick = () => this.deletePet(index);
-            actionCell.appendChild(deleteBtn);
+            deleteBtn.classList.add('btn', 'btn-sm', 'btn-danger');
+            deleteBtn.addEventListener('click', () => {
+                // Pass the 1-based ID for lookup
+                if (confirm(`Are you sure you want to delete ${pet.Name}?`)) {
+                    this.deletePet(id);
+                }
+            });
+            cellActions.appendChild(deleteBtn);
         });
-
-        // After updating the table, update all stats 
-        this.displaySalonData();
-    }
-    
-    // Deletes a pet from the array by its index
-    deletePet(index) {
-        if (confirm(`Are you sure you want to delete ${this.pets[index].Name}?`)) {
-            this.pets.splice(index, 1);
-            this.displayRow(); // Re-render the table
-        }
-    }
-    
-    // Method to load a pet's data into the form for editing (NEW)
-    editPet(index) {
-        const petToEdit = this.pets[index];
         
-        // 1. Populate the form fields with the pet's current data
-        document.getElementById('petId').value = index; // Store the array index as a hidden ID
-        document.getElementById('txtName').value = petToEdit.Name;
-        document.getElementById('txtAge').value = petToEdit.Age;
-        document.getElementById('selGender').value = petToEdit.Gender;
-        document.getElementById('txtBreed').value = petToEdit.Breed;
-        document.getElementById('selService').value = petToEdit.Service;
-        document.getElementById('selType').value = petToEdit.Type;
-        document.getElementById('selPayment').value = petToEdit.PaymentMethod;
-        document.getElementById('selRetainer').value = petToEdit.Retainer;
-        
-        // 2. Adjust button visibility
-        document.getElementById('addPetBtn').style.display = 'none'; // Hide Register
-        document.getElementById('saveChangesBtn').style.display = 'inline-block'; // Show Save Changes
-        
-        // Scroll to the top of the form
-        document.getElementById('petRegistrationForm').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    // Method to save changes from the form back to the pet array (NEW)
-    savePetChanges(index, updatedPet) {
-        if (index >= 0 && index < this.pets.length) {
-            // Overwrite the existing pet object with the new data
-            this.pets[index] = updatedPet;
-            console.log(`Pet ${updatedPet.Name} updated!`);
-            
-            // Reset the form and buttons after saving
-            document.getElementById('petRegistrationForm').reset();
-            document.getElementById('petId').value = ''; 
-            document.getElementById('addPetBtn').style.display = 'inline-block';
-            document.getElementById('saveChangesBtn').style.display = 'none';
-            
-            // Re-display the table
-            this.displayRow(); 
+        // Update stats on the dashboard
+        if (document.getElementById('totalClients')) {
+            this.updateDashboardStats();
         }
     }
 
-
-    // Populates the Service dropdown in both registration.html and services.html
+    // New method to populate service dropdowns on all relevant pages
     populateServiceDropdown() {
         const registrationDropdown = document.getElementById('selService');
         const bookingDropdown = document.getElementById('bookServiceSelect');
 
-        const dropdowns = [registrationDropdown, bookingDropdown].filter(d => d);
+        [registrationDropdown, bookingDropdown].forEach(dropdown => {
+            if (dropdown) {
+                // Clear existing options (keep the disabled 'Select...' option)
+                Array.from(dropdown.options).slice(1).forEach(option => option.remove());
 
-        dropdowns.forEach(dropdown => {
-            // Clear existing options, but keep the first 'Choose a Service...' option
-            let initialOption = dropdown.querySelector('option[value=""]');
-            if (initialOption) {
-                dropdown.innerHTML = '';
-                dropdown.appendChild(initialOption.cloneNode(true));
-            } else {
-                 dropdown.innerHTML = '<option value="">Choose a Service...</option>';
-            }
+                for (const category in serviceMenu) {
+                    const optgroup = document.createElement('optgroup');
+                    optgroup.label = category;
 
-
-            for (const category in serviceMenu) {
-                // Create an Optgroup for the category
-                const optGroup = document.createElement('optgroup');
-                optGroup.label = category;
-
-                serviceMenu[category].forEach(service => {
-                    const option = document.createElement('option');
-                    option.value = service.name;
-                    option.textContent = `${service.name} (${service.price === "Varies" ? "Ask for price" : "$" + service.price})`;
-                    
-                    // Attach the price and description as data attributes for easy retrieval
-                    option.dataset.price = service.price;
-                    option.dataset.description = service.description;
-                    
-                    optGroup.appendChild(option);
-                });
-                dropdown.appendChild(optGroup);
+                    serviceMenu[category].forEach(service => {
+                        const option = document.createElement('option');
+                        option.value = service.name;
+                        option.textContent = service.name;
+                        optgroup.appendChild(option);
+                    });
+                    dropdown.appendChild(optgroup);
+                }
             }
         });
     }
-    
-    // Updates the description and price fields on the services.html page 
+
+    // New method to update service details on the services page
     updateServiceDetails() {
-        const select = document.getElementById('bookServiceSelect');
-        const descriptionInput = document.getElementById('bookServiceDescription');
+        const dropdown = document.getElementById('bookServiceSelect');
         const priceInput = document.getElementById('bookServicePrice');
+        const descTextarea = document.getElementById('bookServiceDescription');
 
-        if (!select || !descriptionInput || !priceInput) return;
+        if (!dropdown || !priceInput || !descTextarea) return;
 
-        const selectedOption = select.options[select.selectedIndex];
-        
-        if (selectedOption && selectedOption.value !== "") {
-            descriptionInput.value = selectedOption.dataset.description || "No description available.";
-            priceInput.value = selectedOption.dataset.price || "N/A";
+        const selectedServiceName = dropdown.value;
+        let selectedService = null;
+
+        if (selectedServiceName) {
+            // Iterate through all categories in serviceMenu to find the selected service
+            for (const category in serviceMenu) {
+                selectedService = serviceMenu[category].find(service => service.name === selectedServiceName);
+                if (selectedService) break;
+            }
+        }
+
+        if (selectedService) {
+            priceInput.value = `$${selectedService.price}`;
+            descTextarea.value = selectedService.description;
         } else {
-            descriptionInput.value = "";
-            priceInput.value = "";
+            // Default state or when "Select a Service" is chosen
+            priceInput.value = '—';
+            descTextarea.value = '';
         }
     }
 
-    // Updates the count and average age stats on index.html
-    displaySalonData() {
-        const petCountElement = document.getElementById('petCount');
-        const averageAgeElement = document.getElementById('averageAge');
+
+    updateDashboardStats() {
+        if (!document.getElementById('totalClients')) return;
+
+        // Total Clients
+        document.getElementById('totalClients').textContent = this.pets.length;
         
-        if (!petCountElement || !averageAgeElement) return;
+        // Average Age
+        const totalAge = this.pets.reduce((sum, pet) => sum + pet.Age, 0);
+        const averageAge = this.pets.length > 0 ? (totalAge / this.pets.length).toFixed(1) : '0.0';
+        document.getElementById('averageAge').textContent = `${averageAge} years`;
 
-        // 1. Update Pet Count
-        petCountElement.textContent = this.pets.length;
-
-        // 2. Calculate and Update Average Age
-        let totalAge = this.pets.reduce((sum, pet) => sum + pet.Age, 0);
-        let averageAge = this.pets.length > 0 ? (totalAge / this.pets.length).toFixed(1) : "0.0";
-        averageAgeElement.textContent = `${averageAge} years`;
-    }
-
-    // Finds unique breeds and services for the stats page (optional, based on your needs)
-    findUnique(property) {
-        // Implementation for finding unique breeds/services goes here
-    }
-}
-
-// Global instance of the salon
-const salon = new Salon("Pimp Your Pet Salon");
-
-// --- Dark Mode Initialization ---
-// Function to handle the click (toggle)
-function toggleDarkMode() {
-    const body = document.body;
-    const isDarkMode = body.classList.toggle('dark-mode');
-    
-    // Save the user's preference to local storage
-    localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
-
-    // Update the button text/icon
-    const darkModeToggle = document.getElementById('darkModeToggle');
-    if (darkModeToggle) {
-        if (isDarkMode) {
-            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
+        // Service Distribution (Top 3)
+        const serviceCounts = this.pets.reduce((counts, pet) => {
+            counts[pet.Service] = (counts[pet.Service] || 0) + 1;
+            return counts;
+        }, {});
+        
+        const sortedServices = Object.entries(serviceCounts)
+            .sort(([, countA], [, countB]) => countB - countA)
+            .slice(0, 3);
+        
+        const topServicesList = document.getElementById('topServicesList');
+        topServicesList.innerHTML = '';
+        if (sortedServices.length > 0) {
+            sortedServices.forEach(([service, count]) => {
+                const li = document.createElement('li');
+                li.textContent = `${service} (${count})`;
+                topServicesList.appendChild(li);
+            });
         } else {
-            darkModeToggle.innerHTML = '<i class="fas fa-moon"></i> Dark Mode';
+            const li = document.createElement('li');
+            li.textContent = 'No data available';
+            topServicesList.appendChild(li);
         }
+
+        // Retainer Clients (New Metric)
+        const retainerClients = this.pets.filter(pet => pet.Retainer !== 'None').length;
+        document.getElementById('retainerClients').textContent = retainerClients;
+        
+        // Favorite Payment Method (New Metric)
+        const paymentCounts = this.pets.reduce((counts, pet) => {
+            counts[pet.PaymentMethod] = (counts[pet.PaymentMethod] || 0) + 1;
+            return counts;
+        }, {});
+        
+        const topPayment = Object.entries(paymentCounts).sort(([, a], [, b]) => b - a)[0];
+        document.getElementById('favoritePayment').textContent = topPayment ? topPayment[0] : 'N/A';
+        
+        // Top 5 Clients (New Metric) - For simplicity, using first 5 registered
+        const topClientsList = document.getElementById('topClientsList');
+        topClientsList.innerHTML = '';
+        this.pets.slice(0, 5).forEach(pet => {
+            const li = document.createElement('li');
+            li.textContent = pet.Name;
+            topClientsList.appendChild(li);
+        });
     }
+
 }
 
-// Function to apply the saved preference on page load
-function initializeDarkMode() {
-    const savedMode = localStorage.getItem('darkMode');
-    const darkModeToggle = document.getElementById('darkModeToggle');
+// Initialize the Salon with the data from registration.js
+let salon = new Salon(petsList);
 
-    if (savedMode === 'enabled') {
-        // Apply the class immediately
-        document.body.classList.add('dark-mode');
-        // Update the button text right away
-        if (darkModeToggle) {
-            darkModeToggle.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
-        }
-    }
-}
+// --- Event Handlers and Initialization for registration.html ---
 
-// --- Event Handlers ---
-
-// Handles pet registration form submission on registration.html (UPDATED to handle Edit/Save)
+// Handles the form submission for both new registration and edit mode
 function handleFormSubmission(event) {
-    event.preventDefault();
+    event.preventDefault(); // Stop the form from refreshing the page
 
-    const petId = document.getElementById('petId').value; // Get the hidden ID (index)
+    const form = event.target;
+    const petId = document.getElementById('petId').value;
     const name = document.getElementById('txtName').value;
     const age = document.getElementById('txtAge').value;
-    const gender = document.getElementById('selGender').value;
+    const gender = document.getElementById('txtGender').value;
     const breed = document.getElementById('txtBreed').value;
     const service = document.getElementById('selService').value;
-    const type = document.getElementById('selType').value;
+    const type = document.getElementById('txtType').value;
     const paymentMethod = document.getElementById('selPayment').value;
     const retainer = document.getElementById('selRetainer').value;
 
-    if (name && age && gender && breed && service && type && paymentMethod && retainer) {
-        const petData = new Pet(name, age, gender, breed, service, type, paymentMethod, retainer);
-        
-        if (petId) {
-            // If petId exists, we are editing (updating) an existing pet
-            salon.savePetChanges(parseInt(petId), petData);
-        } else {
-            // If petId is empty, we are registering a NEW pet
-            salon.registerPet(petData);
-
-            // Clear the form
-            document.getElementById('petRegistrationForm').reset();
-            
-            // Re-display the table and update dashboard stats
-            salon.displayRow(); 
-        }
+    if (petId) {
+        // EDIT MODE
+        salon.updatePet(parseInt(petId), name, age, gender, breed, service, type, paymentMethod, retainer);
+        alert(`${name}'s profile updated successfully!`);
     } else {
-        alert('Please fill out all required fields.');
+        // NEW REGISTRATION MODE
+        salon.registerNewPet(name, age, gender, breed, service, type, paymentMethod, retainer);
+        alert(`${name} has been successfully registered!`);
     }
+    
+    // Reset the form and clear hidden ID field
+    form.reset();
+    document.getElementById('petId').value = '';
+    document.getElementById('registerBtn').textContent = 'REGISTER PET';
+    document.getElementById('cancelBtn').style.display = 'none';
+
 }
 
-// Handles service booking form submission on services.html
+// Handles the click of the Edit button from the table
+function handleEdit(id) {
+    const pet = salon.getPetById(id);
+    if (!pet) return;
+
+    // 1. Populate the form fields with pet data
+    document.getElementById('petId').value = id;
+    document.getElementById('txtName').value = pet.Name;
+    document.getElementById('txtAge').value = pet.Age;
+    document.getElementById('txtGender').value = pet.Gender;
+    document.getElementById('txtBreed').value = pet.Breed;
+    document.getElementById('selService').value = pet.Service;
+    document.getElementById('txtType').value = pet.Type;
+    document.getElementById('selPayment').value = pet.PaymentMethod;
+    document.getElementById('selRetainer').value = pet.Retainer;
+
+    // 2. Change the button text and show the cancel button
+    document.getElementById('registerBtn').textContent = 'SAVE CHANGES';
+    document.getElementById('cancelBtn').style.display = 'inline-block';
+
+    // 3. Scroll to the top of the form
+    document.getElementById('petRegistrationForm').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Handles the click of the Cancel Edit button
+function handleCancel() {
+    const form = document.getElementById('petRegistrationForm');
+    form.reset();
+    document.getElementById('petId').value = ''; // Clear hidden ID
+    document.getElementById('registerBtn').textContent = 'REGISTER PET';
+    document.getElementById('cancelBtn').style.display = 'none';
+}
+
+// --- Event Handler for services.html ---
 function handleServiceBooking(event) {
     event.preventDefault();
 
     const petName = document.getElementById('bookPetName').value;
     const service = document.getElementById('bookServiceSelect').value;
+    
+    // Simple validation
+    if (!petName || !service) {
+        alert('Please enter a pet name and select a service.');
+        return;
+    }
 
-    if (petName && service) {
-        alert(`${petName} has been booked for ${service}! (Data would typically be saved here)`);
-        
-        // Clear the form
-        document.getElementById('serviceBookingForm').reset();
-        
-        // Update service details to clear the description/price fields
-        salon.updateServiceDetails();
+    // This part would typically involve API calls and persistent storage
+    alert(`Appointment booked successfully for ${petName}! \nService: ${service}`);
+
+    // Reset form after successful submission
+    document.getElementById('serviceBookingForm').reset();
+    // Re-initialize service details (clears price/description)
+    salon.updateServiceDetails(); 
+}
+
+// --- Global Dark Mode Logic (runs on all pages) ---
+function setupDarkMode() {
+    const toggle = document.getElementById('darkModeToggle');
+    const body = document.body;
+
+    // Load saved preference or default to light
+    const isDarkMode = localStorage.getItem('darkMode') === 'true';
+
+    // Apply initial state
+    if (isDarkMode) {
+        body.classList.add('dark-mode');
+        toggle.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
     } else {
-        alert('Please provide the pet name and select a service.');
+        toggle.innerHTML = '<i class="fas fa-moon"></i> Dark Mode';
     }
+
+    // Toggle logic
+    toggle.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+        const newIsDarkMode = body.classList.contains('dark-mode');
+        localStorage.setItem('darkMode', newIsDarkMode);
+
+        if (newIsDarkMode) {
+            toggle.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
+        } else {
+            toggle.innerHTML = '<i class="fas fa-moon"></i> Dark Mode';
+        }
+    });
 }
 
-// Function to handle the Cancel/Reset button
-function handleCancel() {
-    // Reset the hidden ID and show/hide buttons for registration mode
-    document.getElementById('petId').value = ''; 
-    document.getElementById('addPetBtn').style.display = 'inline-block';
-    document.getElementById('saveChangesBtn').style.display = 'none';
-}
 
-
-// --- Main Execution Block ---
-document.addEventListener('DOMContentLoaded', () => {
+// --- Main Initialization ---
+$(document).ready(function() {
     
-    // 1. Initialize Dark Mode state first AND attach listener to button 
-    initializeDarkMode(); 
-    const darkModeToggle = document.getElementById('darkModeToggle');
-    if (darkModeToggle) {
-        darkModeToggle.addEventListener('click', toggleDarkMode);
+    // 1. Dark Mode setup (must run on all pages)
+    setupDarkMode();
+
+    // 2. Logic specific to index.html (Dashboard)
+    if (document.getElementById('totalClients')) {
+        salon.updateDashboardStats();
     }
 
-    // 2. Logic for index.html: display stats
-    const petCountElement = document.getElementById('petCount');
-    if (petCountElement) {
-        salon.displaySalonData();
-    }
-    
-    // 3. Logic for registration.html: attach form listener AND display the table
+    // 3. Logic specific to registration.html (Form and Table)
     const registrationForm = document.getElementById('petRegistrationForm');
     if (registrationForm) {
-        registrationForm.addEventListener('submit', handleFormSubmission);
+        // Use jQuery to attach the submission handler (from remote)
+        $('#petRegistrationForm').on('submit', handleFormSubmission);
     }
     
     const tableBody = document.querySelector('#petsTable tbody');
@@ -349,7 +406,7 @@ document.addEventListener('DOMContentLoaded', () => {
         salon.displayRow();
     }
     
-    // Attach listener to the Cancel button to reset edit mode (NEW)
+    // Attach listener to the Cancel button to reset edit mode
     const cancelBtn = document.getElementById('cancelBtn');
     if (cancelBtn) {
         cancelBtn.addEventListener('click', handleCancel);

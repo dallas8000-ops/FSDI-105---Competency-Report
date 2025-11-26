@@ -23,178 +23,174 @@
             padding: 2.5rem;
             border-radius: 1rem;
             /* FIX: Stronger shadow for better separation from the background image */
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); 
-            
-            width: 100%;
-            max-width: 900px;
-            margin-top: 50px;
-        }
-
-        /* Ensure form inputs themselves have clear backgrounds */
-        .form-control, .form-select {
-            background-color: white; 
-            border: 1px solid #ccc; /* Add a subtle border for definition */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); 
+            transition: all 0.5s; /* Added for dark mode */
         }
         
-        /* Dark Mode specific styling to maintain high contrast */
         .dark-mode .content-container {
-            /* Use the dark box background color defined in style.css variables */
-            background-color: var(--clr-box-bg) !important;
+            background-color: #2e434f; /* Darker box in dark mode */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); 
         }
 
-        .dark-mode .form-control, 
-        .dark-mode .form-select {
-            background-color: #333; /* Darker background for inputs */
-            color: var(--clr-text-main); /* Light text color for input values */
-            border-color: #555;
+        /* Registration Form Specific Styling */
+        .registration-form-title {
+            color: var(--clr-accent-primary);
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Table Styling */
+        .pets-table-container {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--clr-accent-secondary);
+        }
+
+        .pets-table thead th {
+            color: var(--clr-text-main);
+            background-color: var(--clr-body-bg); /* Use body color for a subtle header */
+            border-bottom: 2px solid var(--clr-accent-primary);
         }
         
-        /* FIX: Ensure labels and table content are visible in dark mode */
-        .dark-mode label, 
-        .dark-mode #petsTable,
-        .dark-mode h2 {
-            /* Use the light text variable for maximum contrast */
-            color: var(--clr-text-main) !important; 
+        .dark-mode .pets-table thead th {
+            background-color: var(--clr-header-bg);
+            color: var(--clr-header-text);
         }
 
-        /* Ensure table text remains light, as Bootstrap tables can override it */
-        .dark-mode #petsTable tbody tr {
-            color: var(--clr-text-main); 
-        }
-        /* Override Bootstrap's dark table header to ensure light text is used */
-        .dark-mode #petsTable thead.table-dark th {
-             color: white !important; /* Keep the header text clearly white */
+        .pets-table tbody tr {
+            transition: background-color 0.3s;
         }
 
+        .pets-table tbody tr:hover {
+            background-color: rgba(78, 205, 196, 0.1); /* Slight highlight on hover */
+        }
+        
+        .dark-mode .pets-table tbody tr:hover {
+            background-color: rgba(255, 255, 255, 0.05); /* Dark mode hover */
+        }
     </style>
-</head><body class="registration-body-bg">
-    
+</head>
+<body class="dashboard-body"> 
     <div class="main-wrapper">
-        <div class="page-container">
-            <div class="container-fluid p-0">
-                
-                <header class="header-banner">
-                    <h1 class="display-5">Client Registration</h1>
-                    <p class="tagline">Manage your pets here.</p>
-                    
-                    <button id="darkModeToggle" class="btn btn-sm" 
-                            style="position: absolute; top: 15px; right: 15px; z-index: 20;">
-                        <i class="fas fa-moon"></i> Dark Mode
-                    </button>
-                    
-                    <div class="doberman-icon-container">
-                        <img src="doberman.jpg" alt="Doberman Icon" class="doberman-icon"> 
-                    </div>
-                </header>
+        
+        <header class="header-banner">
+            <h1 class="display-5">Pimp your Pet</h1>
+            <p class="tagline">Client Registration</p>
+            
+            <button id="darkModeToggle" class="btn btn-sm" 
+                    style="position: absolute; top: 15px; right: 15px; z-index: 20;">
+                <i class="fas fa-moon"></i> Dark Mode
+            </button>
+            
+            <div class="doberman-icon-container">
+                <img src="doberman.jpg" alt="Doberman Icon" class="doberman-icon">
+            </div>
+        </header>
 
+        <div class="content-section py-5">
+            <div class="container my-4">
                 <div class="row justify-content-center">
                     
-                    <div class="col-12">
-                        <section class="registration-form-section py-5">
-                            <div class="content-container mx-auto">
-                                <h2 class="text-center mb-4">Register New Pet</h2>
-                                
+                    <div class="col-12 col-lg-10">
+                        <div class="content-container">
+                            <h2 class="text-center registration-form-title">
+                                Register a New Pet Client
+                            </h2>
+                            
+                            <section id="registrationFormSection">
                                 <form id="petRegistrationForm">
-                                    <input type="hidden" id="petId" value="">
-                                    
-                                    <div class="row mb-3">
+                                    <input type="hidden" id="petId" value=""> <div class="row mb-3">
                                         <div class="col-md-6">
-                                            <label for="txtName" class="form-label">Name:</label>
+                                            <label for="txtName" class="form-label">Pet Name</label>
                                             <input type="text" class="form-control" id="txtName" required>
                                         </div>
                                         <div class="col-md-6">
-                                            <label for="txtAge" class="form-label">Age (Years):</label>
-                                            <input type="number" class="form-control" id="txtAge" min="0" required>
+                                            <label for="txtAge" class="form-label">Pet Age</label>
+                                            <input type="number" class="form-control" id="txtAge" required>
                                         </div>
                                     </div>
-
+                                    
                                     <div class="row mb-3">
                                         <div class="col-md-6">
-                                            <label for="selGender" class="form-label">Gender:</label>
-                                            <select class="form-select" id="selGender" required>
+                                            <label for="txtGender" class="form-label">Gender</label>
+                                            <select class="form-select" id="txtGender" required>
                                                 <option value="" disabled selected>Select Gender</option>
                                                 <option value="Male">Male</option>
                                                 <option value="Female">Female</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="txtBreed" class="form-label">Breed:</label>
-                                            <input type="text" class="form-control" id="txtBreed" required>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="row mb-3">
-                                        <div class="col-md-6">
-                                            <label for="selService" class="form-label">Service:</label>
-                                            <select class="form-select" id="selService" required>
-                                                <option value="" disabled selected>Select Service</option>
-                                                <option value="Full Grooming">Full Grooming</option>
-                                                <option value="Nail Trim & Filing">Nail Trim & Filing</option>
-                                                <option value="Dental Cleaning">Dental Cleaning</option>
-                                                <option value="De-shedding Treatment">De-shedding Treatment</option>
-                                                <option value="Deep Conditioning Wash">Deep Conditioning Wash</option>
-                                                <option value="Paw Pad Treatment">Paw Pad Treatment</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label for="selType" class="form-label">Type:</label>
-                                            <select class="form-select" id="selType" required>
-                                                <option value="" disabled selected>Select Type</option>
-                                                <option value="Dog">Dog</option>
-                                                <option value="Cat">Cat</option>
                                                 <option value="Other">Other</option>
                                             </select>
                                         </div>
+                                        <div class="col-md-6">
+                                            <label for="txtBreed" class="form-label">Breed</label>
+                                            <input type="text" class="form-control" id="txtBreed" required>
+                                        </div>
                                     </div>
-                                    
+
                                     <div class="row mb-3">
                                         <div class="col-md-6">
-                                            <label for="selPayment" class="form-label">Payment Method:</label>
-                                            <select class="form-select" id="selPayment" required>
-                                                <option value="" disabled selected>Select Payment</option>
-                                                <option value="Card">Card</option>
-                                                <option value="Cash">Cash</option>
-                                                <option value="Venmo">Venmo</option>
+                                            <label for="selService" class="form-label">Service</label>
+                                            <select class="form-select" id="selService" required>
+                                                <option value="" disabled selected>Select a Service</option>
                                             </select>
                                         </div>
                                         <div class="col-md-6">
-                                            <label for="selRetainer" class="form-label">Retainer:</label>
+                                            <label for="txtType" class="form-label">Pet Type</label>
+                                            <input type="text" class="form-control" id="txtType" required placeholder="e.g., Dog, Cat, Rabbit">
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-4">
+                                        <div class="col-md-6">
+                                            <label for="selPayment" class="form-label">Preferred Payment Method</label>
+                                            <select class="form-select" id="selPayment" required>
+                                                <option value="" disabled selected>Select Method</option>
+                                                <option value="Cash">Cash</option>
+                                                <option value="Card">Credit/Debit Card</option>
+                                                <option value="Venmo">Venmo</option>
+                                                <option value="Zelle">Zelle</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="selRetainer" class="form-label">Retainer Schedule</label>
                                             <select class="form-select" id="selRetainer" required>
-                                                <option value="" disabled selected>Select Retainer</option>
+                                                <option value="" disabled selected>Select Schedule</option>
+                                                <option value="None">None</option>
                                                 <option value="Weekly">Weekly</option>
                                                 <option value="Bi-Weekly">Bi-Weekly</option>
                                                 <option value="Monthly">Monthly</option>
-                                                <option value="None">None</option>
                                             </select>
                                         </div>
                                     </div>
 
-                                    <div class="d-flex justify-content-center mt-4">
-                                        <button type="submit" class="btn btn-primary me-2 btn-register" id="addPetBtn">REGISTER</button>
-                                        <button type="button" class="btn btn-warning me-2" id="saveChangesBtn" style="display:none;">Save Changes</button>
-                                        <button type="reset" class="btn btn-secondary" id="cancelBtn">CANCEL</button>
+                                    <div class="form-actions d-flex justify-content-start">
+                                        <button type="submit" id="registerBtn" class="btn btn-primary btn-lg btn-register me-2">
+                                            REGISTER PET
+                                        </button>
+                                        <button type="button" id="cancelBtn" class="btn btn-secondary btn-lg" style="display:none;">
+                                            CANCEL EDIT
+                                        </button>
                                     </div>
                                 </form>
-                            </div>
-                        </section>
-                    </div>
+                            </section>
 
-                    <div class="col-12">
-                        <section class="client-list-section py-4">
-                            <div class="content-container mx-auto">
-                                <h2 class="text-center mb-4">Current Client List</h2>
-                                <table class="table table-striped table-hover" id="petsTable">
-                                    <thead class="table-dark">
+                            <section id="petsListSection" class="pets-table-container">
+                                <h3 class="text-center registration-form-title">
+                                    Current Client List
+                                </h3>
+                                <div class="table-responsive">
+                                    <table id="petsTable" class="table table-hover pets-table">
+                                    <thead>
                                         <tr>
+                                            <th>#</th>
                                             <th>Name</th>
                                             <th>Age</th>
-                                            <th>Type</th>
                                             <th>Gender</th>
                                             <th>Breed</th>
                                             <th>Service</th>
-                                            <th>Payment</th> 
-                                            <th>Retainer</th>
-                                            <th>Action</th>
+                                            <th>Type</th>
+                                            <th>Payment</th>
+                                            <th class="text-center">Retainer</th>
+                                            <th class="text-center">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -218,11 +214,12 @@
         </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+    
     <script src="script.js"></script> 
     <script src="registration.js"></script> 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" 
-            crossorigin="anonymous">
-    </script>
+            crossorigin="anonymous"></script>
 </body>
 </html>

@@ -55,26 +55,3 @@ let pet5 = {
 
 // 2. Create a list of pets (array)
 let petsList = [pet1, pet2, pet3, pet4, pet5];
-console.log("Current Pet List:", petsList);
-
-// 3. Display the pets count
-console.log("Total Pets:", petsList.length);
-
-// 4. Display pet's name
-console.log("Pet Names:");
-for(let i = 0; i < petsList.length; i++){
-    // Corrected array access: use square brackets []
-    console.log(petsList[i].name);
-}
-
-// 5. Calculate and display Average age
-function calculateAverageAge(list) {
-    if (list.length === 0) {
-        return 0;
-    }
-    const totalAge = list.reduce((sum, pet) => sum + pet.age, 0);
-    return (totalAge / list.length).toFixed(1);
-}
-
-const averageAge = calculateAverageAge(petsList);
-console.log("Average Age:", averageAge);

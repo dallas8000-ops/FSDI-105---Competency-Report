@@ -21,204 +21,395 @@
     /* Dark Mode Overrides */
     --clr-body-bg: #043927; /* NEW: Darkest Hunter Green for Background */
     --clr-text-main: #E0E0E0; /* Light text */
-    --clr-header-bg: #0A5C43; /* NEW: Using the medium green for header */
-    --clr-header-text: #E0E0E0;
-    --clr-accent-primary: #92CDD0; /* Light Teal (new accent) */
-    --clr-accent-secondary: #FF6B6B; /* Re-using coral for dark mode contrast */
-    --clr-accent-gold: #FFD700;
-    --clr-box-bg: rgba(30, 30, 30, 0.95); /* Dark box background */
-    --clr-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-    --clr-btn-hover-bg: #1E5631; /* NEW: Forest Green hover */
-    --clr-btn-hover-text: #E0E0E0;
+    --clr-header-bg: #1A535C; /* Dark Teal for Header/Footer */
+    --clr-header-text: #FFC300; /* Gold */
+    --clr-accent-primary: #FFB347; /* Lighter Orange/Coral */
+    --clr-box-bg: rgba(255, 255, 255, 0.08); /* Transparent dark for boxes */
+    --clr-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+    --clr-btn-hover-bg: #0A5C43;
+    --clr-btn-hover-text: white;
 }
 
 /* ------------------------------------------- */
-/* 1. GLOBAL STYLES & WRAPPER (VARIABLES APPLIED)*/
+/* 1. GLOBAL BASE STYLING (BODY, LINKS, ETC)   */
 /* ------------------------------------------- */
 
+/* Set background image for ALL pages */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: var(--clr-body-bg);
+    background-image: url('doberman-bg.jpg');
+    background-size: cover;
+    background-attachment: fixed; /* NEW: Keep background fixed on scroll */
+    background-position: center center;
+    transition: background-color 0.5s;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    color: var(--clr-text-main);
-    transition: background-color 0.5s, color 0.5s;
 }
 
+/* Base body style for light mode */
+body:not(.dark-mode) {
+    background-color: var(--clr-body-bg); /* Fallback for when background image is not available/visible */
+}
+
+/* Dark mode body style */
+.dark-mode.dashboard-body, .dark-mode.registration-page-bg, .dark-mode.services-page-bg {
+    background-color: var(--clr-body-bg); /* Use dark body background */
+}
+
+/* Ensure the main content wrapper takes up available space */
 .main-wrapper {
-    width: 100%;
-    max-width: 1200px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     flex-grow: 1;
-    margin: 0 auto;
-    padding: 0 20px;
 }
 
-/* 2. HEADER & ICON STYLES                     */
+a {
+    color: var(--clr-accent-secondary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--clr-accent-primary);
+}
+
+/* Global input/select styles */
+input[type="text"],
+input[type="number"],
+select {
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 1em;
+}
+
+/* Custom styling for the select/dropdown (For the custom arrow) */
+.custom-select {
+    position: relative;
+    width: 100%;
+}
+
+.custom-select select {
+    appearance: none; /* Remove default arrow in some browsers */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+/* The custom down arrow (using ::after for a cleaner look) */
+.custom-select::after {
+    content: "v"; /* Simple character or use a proper icon/svg */
+    font-family: Arial, sans-serif;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    pointer-events: none; /* Allows clicks to pass through to the select element */
+    color: #666;
+}
+
+/* Styling for the action buttons */
+.form-actions {
+    display: flex;
+    justify-content: flex-start; /* Buttons start from the left */
+    gap: 10px; /* Space between buttons */
+    margin-top: 30px;
+}
+
+/* ------------------------------------------- */
+/* 2. DASHBOARD STYLING (index.html)           */
+/* ------------------------------------------- */
+
+.dashboard-body {
+    background-image: url('doberman-bg.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center center;
+}
 
 .header-banner {
     background-color: var(--clr-header-bg);
     color: var(--clr-header-text);
+    padding: 40px 20px;
     text-align: center;
-    padding: 20px 0 60px 0;
+    border-bottom: 5px solid var(--clr-accent-gold);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     position: relative;
-    min-height: 150px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     transition: background-color 0.5s, color 0.5s;
-}
-
-.header-banner h1 {
-    font-weight: bold;
-    margin-bottom: 0;
 }
 
 .tagline {
     font-style: italic;
-    font-size: 1.1rem;
-    margin-top: 5px;
-    opacity: 0.8;
+    color: var(--clr-accent-gold);
+    margin-top: -10px;
+    margin-bottom: 20px;
+    font-weight: 300;
 }
 
 .doberman-icon-container {
     position: absolute;
-    bottom: -30px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
-    border: 5px solid var(--clr-accent-gold);
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     overflow: hidden;
-    width: 100px;
-    height: 100px;
-    background-color: white;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
-    transition: border-color 0.5s, background-color 0.5s;
-}
-
-.dark-mode .doberman-icon-container {
-    background-color: #333;
+    border: 3px solid var(--clr-accent-gold);
+    z-index: 10;
 }
 
 .doberman-icon {
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
-
-/* 3. BUTTON STYLES                            */
-
-.back-to-dash-btn {
-    background-color: var(--clr-accent-secondary);
-    border-color: var(--clr-accent-secondary);
-    color: var(--clr-text-main);
-    font-weight: bold;
-    transition: background-color 0.3s, border-color 0.3s;
-}
-
-.back-to-dash-btn:hover {
-    background-color: var(--clr-btn-hover-bg);
-    border-color: var(--clr-btn-hover-bg);
-    color: var(--clr-btn-hover-text);
-}
-
-.btn-register {
-    background-color: var(--clr-accent-primary);
-    border-color: var(--clr-accent-primary);
-    color: white;
-    font-weight: bold;
-    transition: background-color 0.3s, border-color 0.3s;
-}
-
-.btn-register:hover {
-    background-color: #FF4444; /* Darker coral on hover (can be hardcoded) */
-    border-color: #FF4444;
-}
-
-/* 4. PAGE-SPECIFIC BACKGROUNDS & DARK MODE    */
-
-/* index.html body class (Dashboard page) */
-.dashboard-body {
-    background-color: #043927; /* Darkest Hunter Green */ 
-    background-image: url('Blaze.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-}
-
-/* registration.html body class */
-.registration-body-bg {
-    background-image: url('boss_bg.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-}
-
-/* services.html body class */
-.services-page-bg {
-    background-image: url('shepherd.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-}
-
-/* Dark Mode overrides to remove image backgrounds for the special pages */
-.dark-mode .dashboard-body,
-.dark-mode .registration-body-bg,
-.dark-mode .services-page-bg {
-    background-image: none !important;
-    background-color: var(--clr-body-bg) !important;
-}
-
-/* 5. DASHBOARD (index.html) STYLES            */
-
-.stats-section {
-    padding-top: 80px !important;
+    display: block;
 }
 
 .stat-box {
     background-color: var(--clr-box-bg);
-    color: var(--clr-text-main);
     border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--clr-box-shadow);
+    transition: background-color 0.5s, box-shadow 0.5s;
+    min-height: 150px;
+}
+
+.dark-mode .stat-box {
     border: 1px solid var(--clr-accent-secondary);
-    transition: background-color 0.5s, color 0.5s, border-color 0.5s, box-shadow 0.5s;
-    min-height: 250px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
 }
 
 .stat-heading {
-    color: var(--clr-accent-secondary);
-    font-weight: bold;
-    border-bottom: 2px dashed var(--clr-accent-secondary);
-    padding-bottom: 10px;
-    margin-bottom: 15px;
-    transition: color 0.5s, border-color 0.5s;
+    color: var(--clr-text-main);
+    font-weight: 600;
+    margin-bottom: 10px;
+    transition: color 0.5s;
 }
 
 .stat-number {
+    font-size: 2.5em;
+    font-weight: 800;
     color: var(--clr-accent-primary);
-    font-size: 2.5rem;
-    font-weight: 900;
-    line-height: 1;
+    margin: 0;
+    line-height: 1.2;
+    transition: color 0.5s;
+}
+
+.client-age-label {
+    color: var(--clr-text-main);
+    transition: color 0.5s;
+}
+
+.client-list {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+    max-height: 150px;
+    overflow-y: auto;
+    color: var(--clr-text-main);
     transition: color 0.5s;
 }
 
 .client-list li {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin: 5px 0;
+    padding: 4px 0;
+    border-bottom: 1px dashed rgba(0, 51, 73, 0.1); /* Match text color with low opacity */
 }
 
-/* Footer Styles */
+.dark-mode .client-list li {
+    border-bottom-color: rgba(224, 224, 224, 0.1); /* Match dark mode text color */
+}
+
+.client-list li:last-child {
+    border-bottom: none;
+}
+
 .main-footer {
     background-color: var(--clr-accent-secondary);
-    color: var(--clr-text-main);
+    color: white;
     text-align: center;
-    width: 100%;
+    font-size: 0.9em;
+    font-weight: 700;
+    transition: background-color 0.5s;
+}
+
+.dark-mode .main-footer {
+    background-color: var(--clr-header-bg); /* Darker green for a subtle change */
+}
+
+
+/* ------------------------------------------- */
+/* 3. SERVICES PAGE STYLING                    */
+/* ------------------------------------------- */
+
+.services-page-bg {
+    /* Use the same background as the main dashboard for consistency */
+    background-color: var(--clr-body-bg); 
+}
+
+.services-h2 {
+    color: var(--clr-accent-primary);
+    font-weight: 700;
+    margin-bottom: 40px;
+}
+
+.service-list-box {
+    background-color: var(--clr-box-bg);
+    border-radius: 10px;
+    box-shadow: var(--clr-box-shadow);
+    transition: background-color 0.5s;
+}
+
+.booking-console-box {
+    background-color: var(--clr-box-bg);
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    transition: background-color 0.5s;
+}
+
+.booking-header {
+    background-color: var(--clr-accent-secondary);
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+    font-weight: 700;
+    transition: background-color 0.5s;
+}
+
+.service-item {
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.1);
+    padding-top: 8px;
+    padding-bottom: 8px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.service-item:last-child {
+    border-bottom: none;
+}
+
+.service-item strong {
+    color: var(--clr-text-main);
+}
+
+.service-item .price {
+    color: var(--clr-accent-primary);
+    font-weight: 700;
+}
+
+.btn-register {
+    background-color: var(--clr-accent-primary) !important;
+    border-color: var(--clr-accent-primary) !important;
+    color: white !important;
+    font-weight: 600;
+}
+
+.btn-register:hover {
+    background-color: #e65c5c !important;
+    border-color: #e65c5c !important;
+}
+
+
+/* ------------------------------------------- */
+/* 4. REGISTRATION STYLING (registration.html) */
+/* ------------------------------------------- */
+
+/* Re-using the content-container class defined in the inline style block in registration.html */
+
+/* Form Control Overrides */
+.form-control, .form-select {
+    border: 1px solid #ced4da;
+    color: var(--clr-text-main);
+    background-color: var(--clr-box-bg);
+    transition: background-color 0.5s, color 0.5s, border-color 0.2s;
+}
+
+.dark-mode .form-control, .dark-mode .form-select {
+    color: var(--clr-text-main) !important;
+}
+
+/* Button Styling (Reusable across pages) */
+.back-to-dash-btn {
+    background-color: var(--clr-accent-secondary);
+    color: var(--clr-header-text);
+    border: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.back-to-dash-btn:hover {
+    background-color: var(--clr-btn-hover-bg);
+    color: var(--clr-btn-hover-text);
+    transform: translateY(-2px);
+}
+
+.btn-register {
+    background-color: var(--clr-accent-primary) !important;
+    border-color: var(--clr-accent-primary) !important;
+    color: white !important;
+    font-weight: 600;
+}
+
+.btn-register:hover {
+    background-color: #e65c5c !important;
+    border-color: #e65c5c !important;
+}
+
+/* Registration Table Styling (Reusable across pages) */
+#petsTable {
+    font-size: 0.9em;
+}
+
+#petsTable th, #petsTable td {
+    vertical-align: middle;
+    padding: 10px;
+}
+
+#petsTable th {
+    background-color: var(--clr-accent-secondary);
+    color: var(--clr-header-text);
+}
+
+#petsTable tbody tr {
+    transition: background-color 0.3s;
+}
+
+#petsTable tbody tr:nth-child(even) {
+    background-color: var(--clr-box-bg);
+}
+
+.dark-mode #petsTable tbody tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+#petsTable tbody tr:hover {
+    background-color: var(--clr-accent-secondary);
+    color: var(--clr-header-text);
+}
+
+.dark-mode #petsTable tbody tr:hover {
+    background-color: var(--clr-btn-hover-bg);
+}
+
+.edit-btn, .delete-btn {
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.edit-btn {
+    color: var(--clr-accent-secondary);
+    margin-right: 10px;
+}
+
+.delete-btn {
+    color: var(--clr-accent-primary);
+}
+
+.edit-btn:hover {
+    color: #4ECDC4; /* slightly brighter for hover */
+}
+
+.delete-btn:hover {
+    color: #cc5c5c; /* slightly darker for hover */
 }
